@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nabha Healthcare - Rural Telemedicine Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .logo h1 {
+            color: #2c3e50;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+
+        .lang-selector {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .lang-btn {
+            padding: 8px 15px;
+            border: 2px solid #3498db;
+            background: transparent;
+            color: #3498db;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 12px;
+        }
+
+        .lang-btn.active, .lang-btn:hover {
+            background: #3498db;
+            color: white;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .service-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .service-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .appointment-icon {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+        }
+
+        .emergency-icon {
+            background: linear-gradient(45deg, #f44336, #d32f2f);
+        }
+
+        .chat-icon {
+            background: linear-gradient(45deg, #2196F3, #1976D2);
+        }
+
+        .service-card h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+
+        .service-card p {
+            color: #7f8c8d;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+        }
+
+        .btn-emergency {
+            background: linear-gradient(45deg, #f44336, #d32f2f);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: linear-gradient(45deg, #2196F3, #1976D2);
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .features {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .features h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #2c3e50;
+            font-size: 28px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .feature-item {
+            padding: 20px;
+            background: rgba(52, 152, 219, 0.1);
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .feature-item h4 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .feature-item p {
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .close:hover {
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+
+        .emergency-modal {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+        }
+
+        .emergency-modal .modal-content {
+            border: 3px solid #f44336;
+        }
+
+        .emergency-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .voice-input {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .voice-input:hover {
+            background: #45a049;
+        }
+
+        .chat-interface {
+            height: 300px;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            padding: 20px;
+            overflow-y: auto;
+            background: #f8f9fa;
+            margin-bottom: 15px;
+        }
+
+        .chat-message {
+            margin-bottom: 15px;
+            padding: 10px 15px;
+            border-radius: 15px;
+            max-width: 80%;
+        }
+
+        .user-message {
+            background: #3498db;
+            color: white;
+            margin-left: auto;
+        }
+
+        .bot-message {
+            background: white;
+            border: 2px solid #e0e0e0;
+        }
+
+        .pharmacy-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 10px 0;
+            border-left: 5px solid #4CAF50;
+        }
+
+        .pharmacy-card h4 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .pharmacy-card p {
+            color: #7f8c8d;
+            margin-bottom: 5px;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .available {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .limited {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .out-of-stock {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .first-aid {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .first-aid h4 {
+            color: #856404;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .first-aid-steps {
+            list-style: none;
+            counter-reset: step-counter;
+        }
+
+        .first-aid-steps li {
+            counter-increment: step-counter;
+            margin-bottom: 10px;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .first-aid-steps li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #ffc107;
+            color: #856404;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .stats {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .stats h3 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-item {
+            padding: 20px;
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            border-radius: 15px;
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: bold;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                width: 95%;
+                padding: 20px;
+            }
+
+            .emergency-actions {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .recording {
+            background: #f44336 !important;
+            animation: recording-pulse 1s infinite;
+        }
+
+        @keyframes recording-pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+
+        .language-content {
+            display: none;
+        }
+
+        .language-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">N+</div>
+                    <div>
+                        <h1 data-en="Nabha Healthcare" data-hi="नाभा स्वास्थ्य सेवा" data-pa="ਨਾਭਾ ਸਿਹਤ ਸੇਵਾ">Nabha Healthcare</h1>
+                        <div class="subtitle" data-en="Rural Telemedicine Platform" data-hi="ग्रामीण टेलीमेडिसिन प्लेटफॉर्म" data-pa="ਪੇਂਡੂ ਟੈਲੀਮੈਡੀਸਿਨ ਪਲੇਟਫਾਰਮ">Rural Telemedicine Platform</div>
+                    </div>
+                </div>
+                <div class="lang-selector">
+                    <button class="lang-btn active" onclick="changeLanguage('en')">English</button>
+                    <button class="lang-btn" onclick="changeLanguage('hi')">हिंदी</button>
+                    <button class="lang-btn" onclick="changeLanguage('pa')">ਪੰਜਾਬੀ</button>
+                </div>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <div class="service-card">
+                <div class="service-icon appointment-icon">📅</div>
+                <h3 data-en="Book Appointment" data-hi="अपॉइंटमेंट बुक करें" data-pa="ਮੁਲਾਕਾਤ ਬੁੱਕ ਕਰੋ">Book Appointment</h3>
+                <p data-en="Schedule consultations with available doctors. Home sample collection and hospital visits only when necessary." data-hi="उपलब्ध डॉक्टरों के साथ परामर्श शेड्यूल करें। घर पर नमूना संग्रह और आवश्यक होने पर ही अस्पताल की यात्रा।" data-pa="ਉਪਲਬਧ ਡਾਕਟਰਾਂ ਨਾਲ ਸਲਾਹ ਕਰੋ। ਘਰ ਵਿੱਚ ਨਮੂਨਾ ਇਕੱਠਾ ਕਰਨਾ ਅਤੇ ਲੋੜ ਪੈਣ 'ਤੇ ਹੀ ਹਸਪਤਾਲ ਜਾਣਾ।">Schedule consultations with available doctors. Home sample collection and hospital visits only when necessary.</p>
+                <button class="btn btn-primary" onclick="openModal('appointmentModal')" data-en="Book Now" data-hi="अभी बुक करें" data-pa="ਹੁਣੇ ਬੁੱਕ ਕਰੋ">Book Now</button>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon emergency-icon">🚨</div>
+                <h3 data-en="Emergency Need" data-hi="आपातकालीन आवश्यकता" data-pa="ਐਮਰਜੈਂਸੀ ਦੀ ਲੋੜ">Emergency Need</h3>
+                <p data-en="Immediate help with AI chatbot, first aid guidance, doctor calling, and ambulance service with GPS tracking." data-hi="AI चैटबॉट, प्राथमिक चिकित्सा मार्गदर्शन, डॉक्टर कॉल और GPS ट्रैकिंग के साथ एम्बुलेंस सेवा के साथ तत्काल सहायता।" data-pa="AI ਚੈਟਬਾਟ, ਪਹਿਲੀ ਸਹਾਇਤਾ ਮਾਰਗਦਰਸ਼ਨ, ਡਾਕਟਰ ਕਾਲ ਅਤੇ GPS ਟਰੈਕਿੰਗ ਨਾਲ ਐਂਬੂਲੈਂਸ ਸੇਵਾ ਨਾਲ ਤੁਰੰਤ ਸਹਾਇਤਾ।">Immediate help with AI chatbot, first aid guidance, doctor calling, and ambulance service with GPS tracking.</p>
+                <button class="btn btn-emergency pulse" onclick="openModal('emergencyModal')" data-en="Get Help Now" data-hi="अभी सहायता प्राप्त करें" data-pa="ਹੁਣੇ ਮਦਦ ਲਓ">Get Help Now</button>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon chat-icon">💬</div>
+                <h3 data-en="Chat with Doctor" data-hi="डॉक्टर से चैट करें" data-pa="ਡਾਕਟਰ ਨਾਲ ਗੱਲਬਾਤ ਕਰੋ">Chat with Doctor</h3>
+                <p data-en="Consult for ongoing conditions like diabetes, fever, or other health concerns. Get medicine recommendations with pharmacy locations." data-hi="मधुमेह, बुखार या अन्य स्वास्थ्य चिंताओं जैसी चल रही स्थितियों के लिए परामर्श लें। फार्मेसी स्थानों के साथ दवा सिफारिशें प्राप्त करें।" data-pa="ਸ਼ੂਗਰ, ਬੁਖਾਰ ਜਾਂ ਹੋਰ ਸਿਹਤ ਚਿੰਤਾਵਾਂ ਵਰਗੀਆਂ ਜਾਰੀ ਸਥਿਤੀਆਂ ਲਈ ਸਲਾਹ ਲਓ। ਫਾਰਮੇਸੀ ਸਥਾਨਾਂ ਨਾਲ ਦਵਾਈ ਸਿਫ਼ਾਰਸ਼ਾਂ ਪ੍ਰਾਪਤ ਕਰੋ।">Consult for ongoing conditions like diabetes, fever, or other health concerns. Get medicine recommendations with pharmacy locations.</p>
+                <button class="btn btn-secondary" onclick="openModal('chatModal')" data-en="Start Chat" data-hi="चैट शुरू करें" data-pa="ਗੱਲਬਾਤ ਸ਼ੁਰੂ ਕਰੋ">Start Chat</button>
+            </div>
+        </div>
+
+        <div class="features">
+            <h2 data-en="Platform Features" data-hi="प्लेटफॉर्म की विशेषताएं" data-pa="ਪਲੇਟਫਾਰਮ ਦੀਆਂ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ">Platform Features</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <h4 data-en="Multilingual Support" data-hi="बहुभाषी समर्थन" data-pa="ਬਹੁ-ਭਾਸ਼ਾ ਸਹਾਇਤਾ">Multilingual Support</h4>
+                    <p data-en="Voice and text input in English, Hindi, and Punjabi" data-hi="अंग्रेजी, हिंदी और पंजाबी में आवाज और पाठ इनपुट" data-pa="ਅੰਗਰੇਜ਼ੀ, ਹਿੰਦੀ ਅਤੇ ਪੰਜਾਬੀ ਵਿੱਚ ਆਵਾਜ਼ ਅਤੇ ਟੈਕਸਟ ਇਨਪੁਟ">Voice and text input in English, Hindi, and Punjabi</p>
+                </div>
+                <div class="feature-item">
+                    <h4 data-en="Offline Access" data-hi="ऑफलाइन पहुंच" data-pa="ਆਫਲਾਈਨ ਪਹੁੰਚ">Offline Access</h4>
+                    <p data-en="Digital health records accessible without internet" data-hi="इंटरनेट के बिना डिजिटल स्वास्थ्य रिकॉर्ड उपलब्ध" data-pa="ਇੰਟਰਨੈਟ ਤੋਂ ਬਿਨਾਂ ਡਿਜੀਟਲ ਸਿਹਤ ਰਿਕਾਰਡ ਉਪਲਬਧ">Digital health records accessible without internet</p>
+                </div>
+                <div class="feature-item">
+                    <h4 data-en="Home Sample Collection" data-hi="घर पर नमूना संग्रह" data-pa="ਘਰ ਵਿੱਚ ਨਮੂਨਾ ਇਕੱਠਾ ਕਰਨਾ">Home Sample Collection</h4>
+                    <p data-en="Lab tests at your doorstep with digital reports" data-hi="डिजिटल रिपोर्ट के साथ आपके घर पर लैब टेस्ट" data-pa="ਡਿਜੀਟਲ ਰਿਪੋਰਟਾਂ ਨਾਲ ਤੁਹਾਡੇ ਘਰ ਵਿੱਚ ਲੈਬ ਟੈਸਟ">Lab tests at your doorstep with digital reports</p>
+                </div>
+                <div class="feature-item">
+                    <h4 data-en="Medicine Tracking" data-hi="दवा ट्रैकिंग" data-pa="ਦਵਾਈ ਟਰੈਕਿੰਗ">Medicine Tracking</h4>
+                    <p data-en="Real-time pharmacy stock with home delivery" data-hi="होम डिलीवरी के साथ रीयल-टाइम फार्मेसी स्टॉक" data-pa="ਘਰ ਡਿਲੀਵਰੀ ਨਾਲ ਰੀਅਲ-ਟਾਈਮ ਫਾਰਮੇਸੀ ਸਟਾਕ">Real-time pharmacy stock with home delivery</p>
+                </div>
+                <div class="feature-item">
+                    <h4 data-en="AI Symptom Checker" data-hi="AI लक्षण जांचकर्ता" data-pa="AI ਲੱਛਣ ਜਾਂਚਕਰਤਾ">AI Symptom Checker</h4>
+                    <p data-en="Low-bandwidth optimized health assessment" data-hi="कम बैंडविड्थ अनुकूलित स्वास्थ्य मूल्यांकन" data-pa="ਘੱਟ ਬੈਂਡਵਿਡਥ ਅਨੁਕੂਲਿਤ ਸਿਹਤ ਮੁਲਾਂਕਣ">Low-bandwidth optimized health assessment</p>
+                </div>
+                <div class="feature-item">
+                    <h4 data-en="GPS Emergency" data-hi="GPS आपातकाल" data-pa="GPS ਐਮਰਜੈਂਸੀ">GPS Emergency</h4>
+                    <p data-en="Automatic location sharing for ambulance dispatch" data-hi="एम्बुलेंस भेजने के लिए स्वचालित स्थान साझाकरण" data-pa="ਐਂਬੂਲੈਂਸ ਭੇਜਣ ਲਈ ਆਟੋਮੈਟਿਕ ਸਥਾਨ ਸਾਂਝਾਕਰਨ">Automatic location sharing for ambulance dispatch</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats">
+            <h3 data-en="Serving Nabha Rural Community" data-hi="नाभा ग्रामीण समुदाय की सेवा" data-pa="ਨਾਭਾ ਪੇਂਡੂ ਕਮਿਉਨਿਟੀ ਦੀ ਸੇਵਾ">Serving Nabha Rural Community</h3>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <span class="stat-number">173</span>
+                    <span class="stat-label" data-en="Villages Covered" data-hi="गांव कवर किए गए" data-pa="ਪਿੰਡਾਂ ਨੂੰ ਕਵਰ ਕੀਤਾ">Villages Covered</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">11</span>
+                    <span class="stat-label" data-en="Active Doctors" data-hi="सक्रिय डॉक्टर" data-pa="ਸਰਗਰਮ ਡਾਕਟਰ">Active Doctors</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">24/7</span>
+                    <span class="stat-label" data-en="Emergency Support" data-hi="आपातकालीन सहायता" data-pa="ਐਮਰਜੈਂਸੀ ਸਹਾਇਤਾ">Emergency Support</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">₹50</span>
+                    <span class="stat-label" data-en="Consultation Fee" data-hi="परामर्श शुल्क" data-pa="ਸਲਾਹ ਫੀਸ">Consultation Fee</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Appointment Modal -->
+    <div id="appointmentModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('appointmentModal')">&times;</span>
+            <h2 data-en="Book Appointment" data-hi="अपॉइंटमेंट बुक करें" data-pa="ਮੁਲਾਕਾਤ ਬੁੱਕ ਕਰੋ">Book Appointment</h2>
+            
+            <form id="appointmentForm">
+                <div class="form-group">
+                    <label data-en="Full Name" data-hi="पूरा नाम" data-pa="ਪੂਰਾ ਨਾਮ">Full Name</label>
+                    <input type="text" id="patientName" required>
+                </div>
+                
+                <div class="form-group">
+                    <label data-en="Phone Number" data-hi="फोन नंबर" data-pa="ਫੋਨ ਨੰਬਰ">Phone Number</label>
+                    <input type="tel" id="patientPhone" required>
+                </div>
+                
+                <div class="form-group">
+                    <label data-en="Village/Area" data-hi="गांव/क्षेत्र" data-pa="ਪਿੰਡ/ਇਲਾਕਾ">Village/Area</label>
+                    <input type="text" id="patientArea" required>
+                </div>
+                
+                <div class="form-group">
+                    <label data-en="Department Needed" data-hi="आवश्यक विभाग" data-pa="ਲੋੜੀਂਦਾ ਵਿਭਾਗ">Department Needed</label>
+                    <select id="department" required>
+                        <option value="" data-en="Select Department" data-hi="विभाग चुनें" data-pa="ਵਿਭਾਗ ਚੁਣੋ">Select Department</option>
+                        <option value="general" data-en="General Medicine" data-hi="सामान्य चिकित्सा" data-pa="ਆਮ ਦਵਾਈ">General Medicine</option>
+                        <option value="pediatrics" data-en="Pediatrics" data-hi="बाल चिकित्सा" data-pa="ਬਾਲ ਚਿਕਿਤਸਾ">Pediatrics</option>
+                        <option value="gynecology" data-en="Gynecology" data-hi="स्त्री रोग" data-pa="ਔਰਤਾਂ ਦੇ ਰੋਗ">Gynecology</option>
+                        <option value="orthopedics" data-en="Orthopedics" data-hi="हड्डी रोग" data-pa="ਹੱਡੀਆਂ ਦੇ ਰੋਗ">Orthopedics</option>
+                        <option value="cardiology" data-en="Cardiology" data-hi="हृदय रोग" data-pa="ਦਿਲ ਦੇ ਰੋਗ">Cardiology</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label data-en="Describe your symptoms" data-hi="अपने लक्षणों का वर्णन करें" data-pa="ਆਪਣੇ ਲੱਛਣਾਂ ਦਾ ਵਰਣਨ ਕਰੋ">Describe your symptoms</label>
+                    <textarea id="symptoms" rows="4" placeholder=""></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label data-en="Preferred Date" data-hi="पसंदीदा तारीख" data-pa="ਪਸੰਦੀਦਾ ਤਾਰੀਖ">Preferred Date</label>
+                    <input type="date" id="appointmentDate" required>
+                </div>
+                
+                <div class="form-group">
+                    <label data-en="Preferred Time" data-hi="पसंदीदा समय" data-pa="ਪਸੰਦੀਦਾ ਸਮਾਂ">Preferred Time</label>
+                    <select id="appointmentTime" required>
+                        <option value="morning" data-en="Morning (9 AM - 12 PM)" data-hi="सुबह (9 बजे - 12 बजे)" data-pa="ਸਵੇਰ (9 ਵਜੇ - 12 ਵਜੇ)">Morning (9 AM - 12 PM)</option>
+                        <option value="afternoon" data-en="Afternoon (2 PM - 5 PM)" data-hi="दोपहर (2 बजे - 5 बजे)" data-pa="ਦੁਪਹਿਰ (2 ਵਜੇ - 5 ਵਜੇ)">Afternoon (2 PM - 5 PM)</option>
+                        <option value="evening" data-en="Evening (5 PM - 8 PM)" data-hi="शाम (5 बजे - 8 बजे)" data-pa="ਸ਼ਾਮ (5 ਵਜੇ - 8 ਵਜੇ)">Evening (5 PM - 8 PM)</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" data-en="Schedule Appointment" data-hi="अपॉइंटमेंट शेड्यूल करें" data-pa="ਮੁਲਾਕਾਤ ਨਿਯਤ ਕਰੋ">Schedule Appointment</button>
+            </form>
+            
+            <div id="appointmentConfirmation" class="hidden">
+                <h3 data-en="Appointment Scheduled!" data-hi="अपॉइंटमेंट शेड्यूल हो गया!" data-pa="ਮੁਲਾਕਾਤ ਨਿਯਤ ਹੋ ਗਈ!">Appointment Scheduled!</h3>
+                <p data-en="Your telemedicine consultation is confirmed. You'll receive a call at your scheduled time. If lab tests are needed, our team will visit your location for sample collection." data-hi="आपका टेलीमेडिसिन परामर्श पुष्ट है। आपको निर्धारित समय पर कॉल आएगी। यदि लैब टेस्ट की आवश्यकता है, तो हमारी टीम नमूना संग्रह के लिए आपके स्थान पर आएगी।" data-pa="ਤੁਹਾਡਾ ਟੈਲੀਮੈਡੀਸਿਨ ਸਲਾਹ ਪੱਕਾ ਹੈ। ਤੁਹਾਨੂੰ ਨਿਯਤ ਸਮੇਂ 'ਤੇ ਕਾਲ ਆਵੇਗੀ। ਜੇ ਲੈਬ ਟੈਸਟ ਦੀ ਲੋੜ ਹੈ, ਤਾਂ ਸਾਡੀ ਟੀਮ ਨਮੂਨਾ ਇਕੱਠਾ ਕਰਨ ਲਈ ਤੁਹਾਡੇ ਸਥਾਨ 'ਤੇ ਆਵੇਗੀ।">Your telemedicine consultation is confirmed. You'll receive a call at your scheduled time. If lab tests are needed, our team will visit your location for sample collection.</p>
+                <div style="margin-top: 20px; padding: 15px; background: #d4edda; border-radius: 10px;">
+                    <strong data-en="Appointment ID: #NH2024001" data-hi="अपॉइंटमेंट आईडी: #NH2024001" data-pa="ਮੁਲਾਕਾਤ ਆਈਡੀ: #NH2024001">Appointment ID: #NH2024001</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Emergency Modal -->
+    <div id="emergencyModal" class="modal emergency-modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('emergencyModal')">&times;</span>
+            <h2 data-en="🚨 Emergency Support" data-hi="🚨 आपातकालीन सहायता" data-pa="🚨 ਐਮਰਜੈਂਸੀ ਸਹਾਇਤਾ">🚨 Emergency Support</h2>
+            
+            <div class="emergency-actions">
+                <button class="voice-input" onclick="startVoiceInput()">
+                    <span id="voiceIcon">🎤</span>
+                    <span data-en="Speak Your Emergency" data-hi="अपनी आपात स्थिति बोलें" data-pa="ਆਪਣੀ ਐਮਰਜੈਂਸੀ ਬੋਲੋ">Speak Your Emergency</span>
+                </button>
+                
+                <button class="btn btn-emergency" onclick="callDoctor()">
+                    <span data-en="📞 Call Doctor Now" data-hi="📞 अभी डॉक्टर को कॉल करें" data-pa="📞 ਹੁਣੇ ਡਾਕਟਰ ਨੂੰ ਕਾਲ ਕਰੋ">📞 Call Doctor Now</span>
+                </button>
+                
+                <button class="btn btn-emergency" onclick="requestAmbulance()">
+                    <span data-en="🚑 Request Ambulance" data-hi="🚑 एम्बुलेंस का अनुरोध करें" data-pa="🚑 ਐਂਬੂਲੈਂਸ ਦੀ ਬੇਨਤੀ ਕਰੋ">🚑 Request Ambulance</span>
+                </button>
+            </div>
+            
+            <div id="emergencyChat" class="chat-interface">
+                <div class="chat-message bot-message">
+                    <strong data-en="Emergency AI Assistant:" data-hi="आपातकालीन AI सहायक:" data-pa="ਐਮਰਜੈਂਸੀ AI ਸਹਾਇਕ:">Emergency AI Assistant:</strong>
+                    <span data-en="I'm here to help. Please describe your emergency in any language - voice or text." data-hi="मैं यहाँ मदद के लिए हूँ। कृपया किसी भी भाषा में अपनी आपात स्थिति का वर्णन करें - आवाज या पाठ।" data-pa="ਮੈਂ ਇੱਥੇ ਮਦਦ ਲਈ ਹਾਂ। ਕਿਰਪਾ ਕਰਕੇ ਕਿਸੇ ਵੀ ਭਾਸ਼ਾ ਵਿੱਚ ਆਪਣੀ ਐਮਰਜੈਂਸੀ ਦਾ ਵਰਣਨ ਕਰੋ - ਆਵਾਜ਼ ਜਾਂ ਟੈਕਸਟ।">I'm here to help. Please describe your emergency in any language - voice or text.</span>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <input type="text" id="emergencyInput" placeholder="Type your emergency..." data-en="Type your emergency..." data-hi="अपनी आपात स्थिति लिखें..." data-pa="ਆਪਣੀ ਐਮਰਜੈਂਸੀ ਲਿਖੋ...">
+                <button type="button" class="btn btn-emergency" onclick="sendEmergencyMessage()" style="margin-top: 10px;" data-en="Send" data-hi="भेजें" data-pa="ਭੇਜੋ">Send</button>
+            </div>
+            
+            <div id="firstAidSection" class="hidden">
+                <div class="first-aid">
+                    <h4 data-en="⚡ Immediate First Aid" data-hi="⚡ तत्काल प्राथमिक चिकित्सा" data-pa="⚡ ਤੁਰੰਤ ਪਹਿਲੀ ਸਹਾਇਤਾ">⚡ Immediate First Aid</h4>
+                    <ol class="first-aid-steps" id="firstAidSteps">
+                        <!-- Steps will be dynamically added based on emergency type -->
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chat Modal -->
+    <div id="chatModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('chatModal')">&times;</span>
+            <h2 data-en="Chat with Doctor" data-hi="डॉक्टर से चैट करें" data-pa="ਡਾਕਟਰ ਨਾਲ ਗੱਲਬਾਤ ਕਰੋ">Chat with Doctor</h2>
+            
+            <div class="chat-interface" id="doctorChat">
+                <div class="chat-message bot-message">
+                    <strong data-en="Dr. Sharma:" data-hi="डॉ. शर्मा:" data-pa="ਡਾ. ਸ਼ਰਮਾ:">Dr. Sharma:</strong>
+                    <span data-en="Hello! I'm here to help with your health concerns. Please describe your symptoms or condition." data-hi="नमस्ते! मैं आपकी स्वास्थ्य चिंताओं में मदद के लिए यहाँ हूँ। कृपया अपने लक्षणों या स्थिति का वर्णन करें।" data-pa="ਸਤ ਸ੍ਰੀ ਅਕਾਲ! ਮੈਂ ਤੁਹਾਡੀਆਂ ਸਿਹਤ ਸਮੱਸਿਆਵਾਂ ਵਿੱਚ ਮਦਦ ਲਈ ਇੱਥੇ ਹਾਂ। ਕਿਰਪਾ ਕਰਕੇ ਆਪਣੇ ਲੱਛਣਾਂ ਜਾਂ ਸਥਿਤੀ ਦਾ ਵਰਣਨ ਕਰੋ।">Hello! I'm here to help with your health concerns. Please describe your symptoms or condition.</span>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <input type="text" id="chatInput" placeholder="Type your message..." data-en="Type your message..." data-hi="अपना संदेश लिखें..." data-pa="ਆਪਣਾ ਸੁਨੇਹਾ ਲਿਖੋ...">
+                <button type="button" class="btn btn-secondary" onclick="sendChatMessage()" style="margin-top: 10px;" data-en="Send" data-hi="भेजें" data-pa="ਭੇਜੋ">Send</button>
+            </div>
+            
+            <div id="pharmacyResults" class="hidden">
+                <h3 data-en="💊 Nearby Pharmacies" data-hi="💊 नजदीकी फार्मेसियां" data-pa="💊 ਨੇੜਲੀਆਂ ਫਾਰਮੇਸੀਆਂ">💊 Nearby Pharmacies</h3>
+                <div id="pharmacyList"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentLanguage = 'en';
+        let isRecording = false;
+        let emergencySteps = {
+            chest_pain: [
+                { en: "Have the person sit down and rest", hi: "व्यक्ति को बैठाएं और आराम कराएं", pa: "ਵਿਅਕਤੀ ਨੂੰ ਬਿਠਾਓ ਅਤੇ ਆਰਾਮ ਕਰਾਓ" },
+                { en: "Loosen tight clothing around chest/neck", hi: "छाती/गर्दन के आसपास तंग कपड़े ढीले करें", pa: "ਛਾਤੀ/ਗਰਦਨ ਦੇ ਆਲੇ-ਦੁਆਲੇ ਤੰਗ ਕੱਪੜੇ ਢਿੱਲੇ ਕਰੋ" },
+                { en: "Give aspirin if available and not allergic", hi: "यदि उपलब्ध हो और एलर्जी न हो तो एस्पिरिन दें", pa: "ਜੇ ਉਪਲਬਧ ਹੈ ਅਤੇ ਐਲਰਜੀ ਨਹੀਂ ਤਾਂ ਐਸਪਰਿਨ ਦਿਓ" },
+                { en: "Call doctor immediately", hi: "तुरंत डॉक्टर को कॉल करें", pa: "ਤੁਰੰਤ ਡਾਕਟਰ ਨੂੰ ਕਾਲ ਕਰੋ" }
+            ],
+            breathing: [
+                { en: "Help person sit upright", hi: "व्यक्ति को सीधा बैठने में मदद करें", pa: "ਵਿਅਕਤੀ ਨੂੰ ਸਿੱਧਾ ਬੈਠਣ ਵਿੱਚ ਮਦਦ ਕਰੋ" },
+                { en: "Ensure airway is clear", hi: "सुनिश्चित करें कि वायुमार्ग साफ है", pa: "ਯਕੀਨੀ ਬਣਾਓ ਕਿ ਸਾਹ ਦਾ ਰਸਤਾ ਸਾਫ਼ ਹੈ" },
+                { en: "Encourage slow, deep breathing", hi: "धीमी, गहरी सांस लेने के लिए प्रोत्साहित करें", pa: "ਹੌਲੀ, ਡੂੰਘੇ ਸਾਹ ਲੈਣ ਲਈ ਉਤਸ਼ਾਹਿਤ ਕਰੋ" },
+                { en: "Stay calm and call for help", hi: "शांत रहें और मदद के लिए कॉल करें", pa: "ਸ਼ਾਂਤ ਰਹੋ ਅਤੇ ਮਦਦ ਲਈ ਕਾਲ ਕਰੋ" }
+            ],
+            bleeding: [
+                { en: "Apply direct pressure to wound", hi: "घाव पर सीधा दबाव डालें", pa: "ਜ਼ਖ਼ਮ 'ਤੇ ਸਿੱਧਾ ਦਬਾਅ ਪਾਓ" },
+                { en: "Elevate injured area if possible", hi: "यदि संभव हो तो घायल क्षेत्र को ऊपर उठाएं", pa: "ਜੇ ਸੰਭਵ ਹੋਵੇ ਤਾਂ ਜ਼ਖ਼ਮੀ ਹਿੱਸੇ ਨੂੰ ਉੱਪਰ ਚੁੱਕੋ" },
+                { en: "Use clean cloth or bandage", hi: "साफ कपड़ा या पट्टी का उपयोग करें", pa: "ਸਾਫ਼ ਕੱਪੜਾ ਜਾਂ ਪੱਟੀ ਦੀ ਵਰਤੋਂ ਕਰੋ" },
+                { en: "Do not remove embedded objects", hi: "धंसी हुई वस्तुओं को न हटाएं", pa: "ਧੱਸੀਆਂ ਚੀਜ਼ਾਂ ਨੂੰ ਨਾ ਹਟਾਓ" }
+            ]
+        };
+
+        let pharmacies = [
+            {
+                name: "Nabha Medical Store",
+                address: "Main Market, Nabha",
+                phone: "+91-9876543210",
+                distance: "0.5 km",
+                medicines: { paracetamol: "available", insulin: "limited", antibiotics: "available" }
+            },
+            {
+                name: "Care Pharmacy",
+                address: "Civil Hospital Road, Nabha",
+                phone: "+91-9876543211",
+                distance: "1.2 km",
+                medicines: { paracetamol: "available", insulin: "available", antibiotics: "out-of-stock" }
+            },
+            {
+                name: "Health Plus Medical",
+                address: "Bus Stand, Nabha",
+                phone: "+91-9876543212",
+                distance: "2.1 km",
+                medicines: { paracetamol: "available", insulin: "out-of-stock", antibiotics: "limited" }
+            }
+        ];
+
+        function changeLanguage(lang) {
+            currentLanguage = lang;
+            
+            // Update active button
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Update all text elements
+            document.querySelectorAll('[data-' + lang + ']').forEach(element => {
+                element.textContent = element.getAttribute('data-' + lang);
+            });
+            
+            // Update placeholders
+            updatePlaceholders(lang);
+        }
+
+        function updatePlaceholders(lang) {
+            const placeholders = {
+                en: {
+                    emergencyInput: "Type your emergency...",
+                    chatInput: "Type your message...",
+                    symptoms: "Describe your symptoms, how long you've had them, and any other relevant information..."
+                },
+                hi: {
+                    emergencyInput: "अपनी आपात स्थिति लिखें...",
+                    chatInput: "अपना संदेश लिखें...",
+                    symptoms: "अपने लक्षणों का वर्णन करें, आपको कितने समय से हैं, और कोई अन्य प्रासंगिक जानकारी..."
+                },
+                pa: {
+                    emergencyInput: "ਆਪਣੀ ਐਮਰਜੈਂਸੀ ਲਿਖੋ...",
+                    chatInput: "ਆਪਣਾ ਸੁਨੇਹਾ ਲਿਖੋ...",
+                    symptoms: "ਆਪਣੇ ਲੱਛਣਾਂ ਦਾ ਵਰਣਨ ਕਰੋ, ਤੁਹਾਨੂੰ ਕਿੰਨੇ ਸਮੇਂ ਤੋਂ ਹਨ, ਅਤੇ ਕੋਈ ਹੋਰ ਸੰਬੰਧਿਤ ਜਾਣਕਾਰੀ..."
+                }
+            };
+            
+            if (placeholders[lang]) {
+                document.getElementById('emergencyInput').placeholder = placeholders[lang].emergencyInput;
+                document.getElementById('chatInput').placeholder = placeholders[lang].chatInput;
+                document.getElementById('symptoms').placeholder = placeholders[lang].symptoms;
+            }
+        }
+
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+            
+            // Set minimum date for appointments to today
+            if (modalId === 'appointmentModal') {
+                const today = new Date().toISOString().split('T')[0];
+                document.getElementById('appointmentDate').min = today;
+            }
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        function startVoiceInput() {
+            const button = document.querySelector('.voice-input');
+            const icon = document.getElementById('voiceIcon');
+            
+            if (!isRecording) {
+                isRecording = true;
+                button.classList.add('recording');
+                icon.textContent = '⏹️';
+                
+                // Simulate voice recognition
+                setTimeout(() => {
+                    addEmergencyMessage("🔄 Connecting you with Dr. Patel... Please stay on the line.", 'bot');
+                    
+                    setTimeout(() => {
+                        addEmergencyMessage("📞 Dr. Patel is now on call. Ambulance dispatched to your location. ETA: 12 minutes.", 'bot');
+                        showLocationSharing();
+                    }, 2000);
+                }, 3000);
+                // some errors
+            };
+             1000;
+        }
+
+        function showFirstAid(type) {
+            const firstAidSection = document.getElementById('firstAidSection');
+            const stepsContainer = document.getElementById('firstAidSteps');
+            
+            firstAidSection.classList.remove('hidden');
+            stepsContainer.innerHTML = '';
+            
+            const steps = emergencySteps[type] || emergencySteps.chest_pain;
+            steps.forEach(step => {
+                const li = document.createElement('li');
+                li.textContent = step[currentLanguage];
+                stepsContainer.appendChild(li);
+            });
+        }
+
+        function showLocationSharing() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const lat = position.coords.latitude.toFixed(6);
+                        const lng = position.coords.longitude.toFixed(6);
+                        addEmergencyMessage(`📍 Location shared: ${lat}, ${lng}. Ambulance tracking your location.`, 'bot');
+                    },
+                    () => {
+                        addEmergencyMessage("📍 Please share your location manually for ambulance dispatch.", 'bot');
+                    }
+                );
+            }
+        }
+
+        function callDoctor() {
+            addEmergencyMessage("📞 Calling emergency doctor... Dr. Patel will be with you shortly.", 'bot');
+            
+            setTimeout(() => {
+                addEmergencyMessage("👨‍⚕️ Dr. Patel: Hello, I'm here to help. Can you describe what's happening?", 'bot');
+            }, 2000);
+        }
+
+        function requestAmbulance() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        addEmergencyMessage("🚑 Ambulance requested! Sharing your location...", 'bot');
+                        setTimeout(() => {
+                            addEmergencyMessage("✅ Ambulance dispatched to your location. ETA: 15 minutes. Stay calm.", 'bot');
+                        }, 1500);
+                    },
+                    () => {
+                        addEmergencyMessage("🚑 Ambulance requested! Please provide your address for dispatch.", 'bot');
+                    }
+                );
+            }
+        }
+
+        function sendChatMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            
+            if (message) {
+                addChatMessage(message, 'user');
+                handleDoctorResponse(message);
+                input.value = '';
+            }
+        }
+
+        function addChatMessage(message, sender) {
+            const chatDiv = document.getElementById('doctorChat');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `chat-message ${sender}-message`;
+            
+            if (sender === 'bot') {
+                messageDiv.innerHTML = `<strong>Dr. Sharma:</strong> ${message}`;
+            } else {
+                messageDiv.textContent = message;
+            }
+            
+            chatDiv.appendChild(messageDiv);
+            chatDiv.scrollTop = chatDiv.scrollHeight;
+        }
+
+        function handleDoctorResponse(message) {
+            const lowerMessage = message.toLowerCase();
+            
+            setTimeout(() => {
+                let response = "";
+                let showPharmacies = false;
+                
+                if (lowerMessage.includes('fever') || lowerMessage.includes('बुखार') || lowerMessage.includes('ਬੁਖਾਰ')) {
+                    response = "I understand you have fever. How many days have you had it? Any other symptoms like headache or body pain?";
+                    showPharmacies = true;
+                } else if (lowerMessage.includes('diabetes') || lowerMessage.includes('sugar') || lowerMessage.includes('मधुमेह') || lowerMessage.includes('ਸ਼ੂਗਰ')) {
+                    response = "For diabetes management, I recommend checking your blood sugar levels. Have you been taking your medication regularly?";
+                    showPharmacies = true;
+                } else if (lowerMessage.includes('headache') || lowerMessage.includes('सिरदर्द') || lowerMessage.includes('ਸਿਰਦਰਦ')) {
+                    response = "For headache relief, ensure you're hydrated and get adequate rest. If severe or persistent, we may need stronger medication.";
+                    showPharmacies = true;
+                } else if (lowerMessage.includes('3 days') || lowerMessage.includes('3 दिन') || lowerMessage.includes('3 ਦਿਨ')) {
+                    response = "A fever lasting 3 days needs attention. I'm prescribing Paracetamol 500mg twice daily and recommending a blood test. Please take rest and increase fluid intake.";
+                    showPharmacies = true;
+                } else {
+                    response = "Thank you for sharing your symptoms. Based on what you've described, I'll provide appropriate recommendations. Can you tell me more about when these symptoms started?";
+                }
+                
+                addChatMessage(response, 'bot');
+                
+                if (showPharmacies) {
+                    setTimeout(() => {
+                        addChatMessage("I'm checking nearby pharmacies for your prescribed medicines...", 'bot');
+                        showNearbyPharmacies();
+                    }, 1500);
+                }
+            }, 1000);
+        }
+
+        function showNearbyPharmacies() {
+            const pharmacyResults = document.getElementById('pharmacyResults');
+            const pharmacyList = document.getElementById('pharmacyList');
+            
+            pharmacyResults.classList.remove('hidden');
+            pharmacyList.innerHTML = '';
+            
+            pharmacies.forEach(pharmacy => {
+                const card = document.createElement('div');
+                card.className = 'pharmacy-card';
+                
+                const medicineStatuses = Object.entries(pharmacy.medicines).map(([med, status]) => {
+                    const statusClass = status === 'available' ? 'available' : status === 'limited' ? 'limited' : 'out-of-stock';
+                    return `<span class="status ${statusClass}">${med}: ${status}</span>`;
+                }).join(' ');
+                
+                card.innerHTML = `
+                    <h4>${pharmacy.name}</h4>
+                    <p>📍 ${pharmacy.address} (${pharmacy.distance})</p>
+                    <p>📞 ${pharmacy.phone}</p>
+                    <div style="margin: 10px 0;">${medicineStatuses}</div>
+                    <button class="btn btn-primary" onclick="orderFromPharmacy('${pharmacy.name}')">
+                        <span data-en="🛒 Order & Home Delivery" data-hi="🛒 ऑर्डर और होम डिलीवरी" data-pa="🛒 ਆਰਡਰ ਅਤੇ ਘਰ ਡਿਲੀਵਰੀ">🛒 Order & Home Delivery</span>
+                    </button>
+                `;
+                
+                pharmacyList.appendChild(card);
+            });
+        }
+
+        function orderFromPharmacy(pharmacyName) {
+            addChatMessage(`Order placed with ${pharmacyName}! Your medicines will be delivered within 2 hours. Delivery fee: ₹20. Total: ₹85`, 'bot');
+            addChatMessage("📱 You'll receive SMS updates about your delivery status.", 'bot');
+        }
+
+        function submitAppointment(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('patientName').value;
+            const phone = document.getElementById('patientPhone').value;
+            const area = document.getElementById('patientArea').value;
+            const department = document.getElementById('department').value;
+            const symptoms = document.getElementById('symptoms').value;
+            const date = document.getElementById('appointmentDate').value;
+            const time = document.getElementById('appointmentTime').value;
+            
+            // Hide form and show confirmation
+            document.getElementById('appointmentForm').classList.add('hidden');
+            document.getElementById('appointmentConfirmation').classList.remove('hidden');
+            
+            // Simulate appointment booking process
+            setTimeout(() => {
+                const confirmationDiv = document.getElementById('appointmentConfirmation');
+                const additionalInfo = document.createElement('div');
+                additionalInfo.innerHTML = `
+                    <div style="margin-top: 20px; padding: 15px; background: #e3f2fd; border-radius: 10px;">
+                        <h4 data-en="Next Steps:" data-hi="अगले कदम:" data-pa="ਅਗਲੇ ਕਦਮ:">Next Steps:</h4>
+                        <p data-en="1. You'll receive a video call on ${date} during ${time}" data-hi="1. आपको ${date} को ${time} के दौरान वीडियो कॉल आएगी" data-pa="1. ਤੁਹਾਨੂੰ ${date} ਨੂੰ ${time} ਦੌਰਾਨ ਵੀਡੀਓ ਕਾਲ ਆਵੇਗੀ">1. You'll receive a video call on ${date} during ${time}</p>
+                        <p data-en="2. If tests are needed, our team will visit your home in ${area}" data-hi="2. यदि टेस्ट की आवश्यकता है, तो हमारी टीम ${area} में आपके घर आएगी" data-pa="2. ਜੇ ਟੈਸਟ ਦੀ ਲੋੜ ਹੈ, ਤਾਂ ਸਾਡੀ ਟੀਮ ${area} ਵਿੱਚ ਤੁਹਾਡੇ ਘਰ ਆਵੇਗੀ">2. If tests are needed, our team will visit your home in ${area}</p>
+                        <p data-en="3. Hospital visit scheduled only if necessary" data-hi="3. अस्पताल की यात्रा केवल आवश्यक होने पर निर्धारित" data-pa="3. ਹਸਪਤਾਲ ਦੀ ਮੁਲਾਕਾਤ ਕੇਵਲ ਲੋੜ ਪੈਣ 'ਤੇ ਨਿਯਤ">3. Hospital visit scheduled only if necessary</p>
+                    </div>
+                `;
+                confirmationDiv.appendChild(additionalInfo);
+            }, 1000);
+        }
+
+        // Add event listeners
+        document.getElementById('appointmentForm').addEventListener('submit', submitAppointment);
+        
+        document.getElementById('emergencyInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendEmergencyMessage();
+            }
+        });
+        
+        document.getElementById('chatInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendChatMessage();
+            }
+        });
+
+        // Close modals when clicking outside
+        window.addEventListener('click', function(e) {
+            if (e.target.classList.contains('modal')) {
+                e.target.style.display = 'none';
+            }
+        });
+
+        // Initialize default language content
+        updatePlaceholders('en');
+
+        // Simulate real-time updates
+        setInterval(() => {
+            const stats = document.querySelectorAll('.stat-number');
+            if (stats.length > 0) {
+                // Randomly update a stat to show live data
+                const randomStat = stats[Math.floor(Math.random() * stats.length)];
+                if (randomStat.textContent === '11') {
+                    // Sometimes show doctor availability changes
+                    if (Math.random() > 0.8) {
+                        randomStat.textContent = Math.random() > 0.5 ? '12' : '10';
+                        setTimeout(() => {
+                            randomStat.textContent = '11';
+                        }, 3000);
+                    }
+                }
+            }
+        }, 10000);
+
+        // Simulate network optimization for rural areas
+        function optimizeForLowBandwidth() {
+            // Compress images and reduce animation complexity for slow connections
+            if (navigator.connection && navigator.connection.effectiveType === 'slow-2g') {
+                document.querySelectorAll('.service-card').forEach(card => {
+                    card.style.animation = 'none';
+                });
+            }
+        }
+
+        // Check for low bandwidth and optimize
+        if (navigator.connection) {
+            optimizeForLowBandwidth();
+            navigator.connection.addEventListener('change', optimizeForLowBandwidth);
+        }
+
+        // Service Worker for offline functionality (basic implementation)
+        if ('serviceWorker' in navigator) {
+            const swCode = `
+                self.addEventListener('fetch', event => {
+                    if (event.request.url.includes('/api/')) {
+                        event.respondWith(
+                            caches.match(event.request).then(response => {
+                                return response || new Response('{"offline": true, "message": "Offline mode - limited functionality"}', {
+                                    headers: { 'Content-Type': 'application/json' }
+                                });
+                            })
+                        );
+                    }
+                });
+            `;
+            
+            const blob = new Blob([swCode], { type: 'application/javascript' });
+            const swUrl = URL.createObjectURL(blob);
+            
+            navigator.serviceWorker.register(swUrl)
+                .then(() => console.log('Service Worker registered for offline support'))
+                .catch(() => console.log('Service Worker registration failed'));
+        }
+
+        // Add notification permission request for emergency alerts
+        function requestNotificationPermission() {
+            if ('Notification' in window && Notification.permission === 'default') {
+                Notification.requestPermission();
+            }
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            requestNotificationPermission();
+            
+            // Add some sample chat for demonstration
+            setTimeout(() => {
+                if (Math.random() > 0.7) {
+                    const notifications = [
+                        "💊 Medicine stock updated at Nabha Medical Store",
+                        "👨‍⚕️ Dr. Kumar is now available for consultations",
+                        "🚑 Ambulance response time improved to 12 minutes"
+                    ];
+                    
+                    const notification = notifications[Math.floor(Math.random() * notifications.length)];
+                    if ('Notification' in window && Notification.permission === 'granted') {
+                        new Notification('Nabha Healthcare Update', {
+                            body: notification,
+                            icon: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="%234CAF50"/><text x="50" y="60" text-anchor="middle" fill="white" font-size="30" font-weight="bold">N+</text></svg>'
+                        });
+                    }
+                }
+            }, 5000);
+        });
+
+        // Voice recognition simulation for better UX
+        function simulateVoiceRecognition() {
+            const phrases = [
+                { en: "I have chest pain", hi: "मुझे छाती में दर्द है", pa: "ਮੈਨੂੰ ਛਾਤੀ ਵਿੱਚ ਦਰਦ ਹੈ" },
+                { en: "I can't breathe properly", hi: "मैं ठीक से सांस नहीं ले सकता", pa: "ਮੈਂ ਠੀਕ ਨਾਲ ਸਾਹ ਨਹੀਂ ਲੈ ਸਕਦਾ" },
+                { en: "I have been bleeding", hi: "मुझसे खून बह रहा है", pa: "ਮੇਰੇ ਤੋਂ ਖੂਨ ਨਿਕਲ ਰਿਹਾ ਹੈ" }
+            ];
+            
+            return phrases[Math.floor(Math.random() * phrases.length)][currentLanguage];
+        }
+
+        // Advanced GPS tracking simulation
+        function trackAmbulance() {
+            let eta = 15;
+            const trackingInterval = setInterval(() => {
+                eta--;
+                if (eta > 0) {
+                    addEmergencyMessage(`🚑 Ambulance update: ETA ${eta} minutes. Current location: 2.${eta}km away`, 'bot');
+                } else {
+                    addEmergencyMessage(`🏥 Ambulance has arrived at your location!`, 'bot');
+                    clearInterval(trackingInterval);
+                }
+            }, 60000); // Update every minute
+        }
+
+        // Prescription management
+        function generatePrescription(medicines) {
+            const prescriptionDiv = document.createElement('div');
+            prescriptionDiv.style.cssText = 'margin: 15px 0; padding: 15px; background: #e8f5e8; border-radius: 10px; border-left: 4px solid #4CAF50;';
+            
+            prescriptionDiv.innerHTML = `
+                <h4>📋 Digital Prescription</h4>
+                <p><strong>Date:</strong> ${new Date().toLocaleDateString()}</p>
+                <p><strong>Doctor:</strong> Dr. Sharma, MBBS, MD</p>
+                <p><strong>Medicines:</strong></p>
+                <ul style="margin-left: 20px;">
+                    ${medicines.map(med => `<li>${med}</li>`).join('')}
+                </ul>
+                <p><em>Valid for 30 days. Show this to any registered pharmacy.</em></p>
+            `;
+            
+            document.getElementById('doctorChat').appendChild(prescriptionDiv);
+        }
+
+        // Sample prescription generation for demo
+        function demonstratePrescription() {
+            setTimeout(() => {
+                generatePrescription([
+                    "Paracetamol 500mg - Twice daily after meals",
+                    "Vitamin D3 60000 IU - Once weekly",
+                    "ORS packets - As needed for hydration"
+                ]);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
+                    
