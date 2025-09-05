@@ -19,79 +19,12 @@
             animation: slideInTop 0.8s ease-out;
         }
 
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        @media (max-width: 768px) {
-            .nav-container {
-                justify-content: flex-end;
-            }
-        }
-
-        .nav-logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--text-accent);
-        }
-
-        .nav-logo-icon {
-            width: 35px;
-            height: 35px;
-            background: linear-gradient(45deg, #4CAF50, #45a049);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            font-size: 16px;
-        }
-
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-            padding: 5px;
-            z-index: 1001;
-        }
-
-        .hamburger span {
-            width: 25px;
-            height: 3px;
-            background: var(--text-accent);
-            margin: 3px 0;
-            transition: all 0.3s ease;
-            border-radius: 2px;
-        }
-
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(5px, 5px);
-        }
-
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(7px, -6px);
-        }
-
         .nav-links {
             display: flex;
             justify-content: center;
             gap: 35px;
             list-style: none;
             flex-wrap: wrap;
-            margin: 0;
-            padding: 0;
         }
 
         .nav-links li a {
@@ -189,10 +122,6 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
         }
 
         body {
@@ -1099,60 +1028,6 @@
                 padding: 15px;
             }
 
-            .navbar {
-                padding: 15px 20px;
-                margin-bottom: 20px;
-            }
-
-            .nav-logo {
-                display: none;
-            }
-
-            .hamburger {
-                display: flex;
-            }
-
-            .nav-links {
-                position: fixed;
-                top: 0;
-                left: -100%;
-                width: 100%;
-                height: 100vh;
-                background: var(--bg-secondary);
-                backdrop-filter: blur(20px);
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                gap: 30px;
-                transition: left 0.3s ease;
-                z-index: 1000;
-                padding: 80px 20px 20px 20px;
-            }
-
-            .nav-links.active {
-                left: 0;
-            }
-
-            .nav-links li a {
-                font-size: 24px;
-                padding: 15px 30px;
-                text-align: center;
-                width: 200px;
-                display: block;
-                border: 2px solid transparent;
-                border-radius: 15px;
-                background: var(--bg-tertiary);
-                margin: 10px 0;
-                box-shadow: 0 5px 15px var(--shadow-light);
-            }
-
-            .nav-links li a:hover {
-                transform: scale(1.05);
-                border-color: #4CAF50;
-                background: linear-gradient(45deg, #4CAF50, #45a049);
-                color: white !important;
-            }
-
             .header-content {
                 flex-direction: column;
                 gap: 20px;
@@ -1173,16 +1048,13 @@
                 grid-template-columns: 1fr;
             }
 
-            .lang-btn {
-                padding: 8px 15px;
-                font-size: 14px;
+            .nav-links {
+                gap: 15px;
             }
 
-            .theme-toggle {
-                width: 40px;
-                height: 40px;
-                font-size: 18px;
-                margin-right: 10px;
+            .nav-links li a {
+                padding: 8px 15px;
+                font-size: 14px;
             }
 
             .service-icon {
@@ -1194,44 +1066,6 @@
             .floating-icon {
                 font-size: 18px;
                 opacity: 0.05;
-            }
-
-            .features {
-                padding: 25px;
-            }
-
-            .stats {
-                padding: 25px;
-            }
-
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 15px;
-            }
-
-            .features-grid {
-                grid-template-columns: 1fr;
-                gap: 15px;
-            }
-
-            /* Mobile nav overlay */
-            .nav-overlay {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100vh;
-                background: rgba(0, 0, 0, 0.5);
-                backdrop-filter: blur(0px);
-                z-index: 999;
-                opacity: 0;
-                visibility: hidden;
-                transition: all 0.3s ease;
-            }
-
-            .nav-overlay.active {
-                opacity: 1;
-                visibility: visible;
             }
         }
 
@@ -1408,31 +1242,15 @@
     <div class="medical-pattern"></div>
 
     <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <div class="nav-logo-icon">N+</div>
-                <span>Nabha Healthcare</span>
-            </div>
-            
-            <div class="hamburger" onclick="toggleMobileNav()">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#" data-en="Home" data-hi="होम" data-pa="ਘਰ" onclick="closeMobileNav()">Home</a></li>
-                <li><a href="#services" data-en="Services" data-hi="सेवाएं" data-pa="ਸੇਵਾਵਾਂ" onclick="closeMobileNav()">Services</a></li>
-                <li><a href="#pharmacy" data-en="Pharmacy" data-hi="फार्मेसी" data-pa="ਫਾਰਮੇਸੀ" onclick="closeMobileNav()">Pharmacy</a></li>
-                <li><a href="#first-aid" data-en="First Aid" data-hi="प्राथमिक चिकित्सा" data-pa="ਪਹਿਲੀ ਸਹਾਇਤਾ" onclick="closeMobileNav()">First Aid</a></li>
-                <li><a href="#stats" data-en="Statistics" data-hi="आंकड़े" data-pa="ਅੰਕੜੇ" onclick="closeMobileNav()">Statistics</a></li>
-                <li><a href="#contact" data-en="Contact" data-hi="संपर्क" data-pa="ਸੰਪਰਕ" onclick="closeMobileNav()">Contact</a></li>
-            </ul>
-        </div>
-    </nav>
-    
-    <!-- Mobile nav overlay -->
-    <div class="nav-overlay" id="navOverlay" onclick="closeMobileNav()"></div>
+    <ul class="nav-links">
+        <li><a href="#" data-en="Home" data-hi="होम" data-pa="ਘਰ">Home</a></li>
+        <li><a href="#services" data-en="Services" data-hi="सेवाएं" data-pa="ਸੇਵਾਵਾਂ">Services</a></li>
+        <li><a href="#pharmacy" data-en="Pharmacy" data-hi="फार्मेसी" data-pa="ਫਾਰਮੇਸੀ">Pharmacy</a></li>
+        <li><a href="#first-aid" data-en="First Aid" data-hi="प्राथमिक चिकित्सा" data-pa="ਪਹਿਲੀ ਸਹਾਇਤਾ">First Aid</a></li>
+        <li><a href="#stats" data-en="Statistics" data-hi="आंकड़े" data-pa="ਅੰਕੜੇ">Statistics</a></li>
+        <li><a href="#contact" data-en="Contact" data-hi="संपर्क" data-pa="ਸੰਪਰਕ">Contact</a></li>
+    </ul>
+</nav>
     
     <div class="container">
         <header>
@@ -1716,46 +1534,6 @@
             // Update placeholders
             updatePlaceholders(lang);
         }
-
-        // Mobile Navigation Functions
-        function toggleMobileNav() {
-            const navLinks = document.getElementById('navLinks');
-            const hamburger = document.querySelector('.hamburger');
-            const overlay = document.getElementById('navOverlay');
-            
-            if (!navLinks || !hamburger || !overlay) return;
-            
-            navLinks.classList.toggle('active');
-            hamburger.classList.toggle('active');
-            overlay.classList.toggle('active');
-            
-            // Prevent body scroll when menu is open
-            if (navLinks.classList.contains('active')) {
-                document.body.style.overflow = 'hidden';
-            } else {
-                document.body.style.overflow = 'auto';
-            }
-        }
-
-        function closeMobileNav() {
-            const navLinks = document.getElementById('navLinks');
-            const hamburger = document.querySelector('.hamburger');
-            const overlay = document.getElementById('navOverlay');
-            
-            if (!navLinks || !hamburger || !overlay) return;
-            
-            navLinks.classList.remove('active');
-            hamburger.classList.remove('active');
-            overlay.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-
-        // Close mobile nav on window resize to desktop
-        window.addEventListener('resize', function() {
-            if (window.innerWidth > 768) {
-                closeMobileNav();
-            }
-        });
 
         let emergencySteps = {
             chest_pain: [
