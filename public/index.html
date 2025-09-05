@@ -6,17 +6,82 @@
     <title>Nabha Healthcare - Rural Telemedicine Platform</title>
     <style>
         .navbar {
-            background: rgba(255, 255, 255, 0.9);
+            background: var(--bg-tertiary);
             backdrop-filter: blur(20px);
             border-radius: 20px;
             margin-bottom: 25px;
-            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 10px 35px var(--shadow-medium);
             padding: 20px 35px;
             position: sticky;
             top: 10px;
             z-index: 999;
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            border: 1px solid var(--border-color);
             animation: slideInTop 0.8s ease-out;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                justify-content: flex-end;
+            }
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-accent);
+        }
+
+        .nav-logo-icon {
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 5px;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--text-accent);
+            margin: 3px 0;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
         }
 
         .nav-links {
@@ -25,11 +90,13 @@
             gap: 35px;
             list-style: none;
             flex-wrap: wrap;
+            margin: 0;
+            padding: 0;
         }
 
         .nav-links li a {
             text-decoration: none;
-            color: #2c3e50;
+            color: var(--text-accent);
             font-weight: 600;
             font-size: 16px;
             transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -88,22 +155,57 @@
 }
 
 
+        :root {
+            --bg-primary: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            --bg-secondary: rgba(255, 255, 255, 0.95);
+            --bg-tertiary: rgba(255, 255, 255, 0.9);
+            --text-primary: #333;
+            --text-secondary: #7f8c8d;
+            --text-accent: #2c3e50;
+            --border-color: rgba(255, 255, 255, 0.3);
+            --shadow-light: rgba(0, 0, 0, 0.1);
+            --shadow-medium: rgba(0, 0, 0, 0.15);
+            --shadow-heavy: rgba(0, 0, 0, 0.2);
+            --pattern-color: rgba(76, 175, 80, 0.03);
+            --floating-icon-opacity: 0.15;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: linear-gradient(-45deg, #1a1a2e, #16213e, #0f3460, #533483);
+            --bg-secondary: rgba(30, 30, 50, 0.95);
+            --bg-tertiary: rgba(40, 40, 60, 0.9);
+            --text-primary: #e8e8e8;
+            --text-secondary: #b8b8b8;
+            --text-accent: #ffffff;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --shadow-light: rgba(0, 0, 0, 0.3);
+            --shadow-medium: rgba(0, 0, 0, 0.4);
+            --shadow-heavy: rgba(0, 0, 0, 0.5);
+            --pattern-color: rgba(76, 175, 80, 0.08);
+            --floating-icon-opacity: 0.25;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            color: #333;
-            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            color: var(--text-primary);
+            background: var(--bg-primary);
             background-size: 400% 400%;
             animation: gradientShift 15s ease infinite;
             min-height: 100vh;
             overflow-x: hidden;
             position: relative;
+            transition: all 0.3s ease;
         }
 
         @keyframes gradientShift {
@@ -123,11 +225,18 @@
             background: 
                 radial-gradient(circle at 20% 30%, rgba(76, 175, 80, 0.05) 0%, transparent 50%),
                 radial-gradient(circle at 80% 70%, rgba(33, 150, 243, 0.05) 0%, transparent 50%),
-                url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cpath d='M30 30h20v20H30z' fill='rgba(76, 175, 80, 0.03)'/%3E%3Cpath d='M30 10h20v20H30z' fill='rgba(33, 150, 243, 0.03)'/%3E%3C/g%3E%3C/svg%3E");
+                url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cpath d='M30 30h20v20H30z' fill='var(--pattern-color)'/%3E%3Cpath d='M30 10h20v20H30z' fill='var(--pattern-color)'/%3E%3C/g%3E%3C/svg%3E");
             opacity: 0.8;
             animation: bgPatternMove 30s linear infinite;
             pointer-events: none;
             z-index: 1;
+        }
+
+        [data-theme="dark"] body::before {
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(76, 175, 80, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(33, 150, 243, 0.1) 0%, transparent 50%),
+                url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cpath d='M30 30h20v20H30z' fill='rgba(76, 175, 80, 0.08)'/%3E%3Cpath d='M30 10h20v20H30z' fill='rgba(33, 150, 243, 0.08)'/%3E%3C/g%3E%3C/svg%3E");
         }
 
         /* DNA Helix Animation in Background */
@@ -183,9 +292,14 @@
         .floating-icon {
             position: absolute;
             font-size: 28px;
-            opacity: 0.85;
+            opacity: var(--floating-icon-opacity);
             filter: drop-shadow(0 0 10px rgba(255,255,255,0.3));
             z-index: 2;
+            transition: all 0.3s ease;
+        }
+
+        [data-theme="dark"] .floating-icon {
+            filter: drop-shadow(0 0 15px rgba(76, 175, 80, 0.4));
         }
 
         .floating-icon:nth-child(1) { top: 15%; left: 10%; }
@@ -298,13 +412,13 @@
         }
 
         header {
-            background: rgba(255, 255, 255, 0.95);
+            background: var(--bg-secondary);
             backdrop-filter: blur(20px);
             border-radius: 25px;
             padding: 25px;
             margin-bottom: 30px;
-            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 15px 50px var(--shadow-medium);
+            border: 1px solid var(--border-color);
             animation: slideInTop 1s ease-out;
             position: relative;
             overflow: hidden;
@@ -373,13 +487,13 @@
         }
 
         .logo h1 {
-            color: #2c3e50;
+            color: var(--text-accent);
             font-size: 24px;
             font-weight: 700;
         }
 
         .subtitle {
-            color: #7f8c8d;
+            color: var(--text-secondary);
             font-size: 14px;
         }
 
@@ -387,6 +501,71 @@
             display: flex;
             gap: 10px;
             align-items: center;
+        }
+
+        .theme-toggle {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border: none;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            cursor: pointer;
+            font-size: 20px;
+            color: white;
+            margin-right: 15px;
+            transition: all 0.4s ease;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1) rotate(10deg);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+        }
+
+        .lang-btn {
+            padding: 10px 18px;
+            border: 2px solid #3498db;
+            background: transparent;
+            color: #3498db;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            font-size: 13px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        [data-theme="dark"] .lang-btn {
+            border-color: #42A5F5;
+            color: #42A5F5;
+        }
+
+        .lang-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(52, 152, 219, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .lang-btn:hover::before {
+            left: 100%;
+        }
+
+        .lang-btn.active, .lang-btn:hover {
+            background: #3498db;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(52, 152, 219, 0.3);
+        }
+
+        [data-theme="dark"] .lang-btn.active, 
+        [data-theme="dark"] .lang-btn:hover {
+            background: #42A5F5;
+            color: white;
         }
 
 
@@ -399,19 +578,18 @@
         }
 
         .service-card {
-            background: rgba(255, 255, 255, 0.95);
+            background: var(--bg-secondary);
             backdrop-filter: blur(20px);
             border-radius: 25px;
             padding: 35px;
             text-align: center;
             transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 15px 50px var(--shadow-light);
+            border: 1px solid var(--border-color);
             position: relative;
             overflow: hidden;
             animation: fadeInUp 0.8s ease-out forwards;
             opacity: 0;
-            
             transform: translateY(30px);
         }
 
@@ -499,11 +677,13 @@
         .service-card h3 {
             font-size: 24px;
             margin-bottom: 15px;
-            color: #2c3e50;
+            color: var(--text-accent);
+            position: relative;
+            display: inline-block;
         }
 
         .service-card p {
-            color: #7f8c8d;
+            color: var(--text-secondary);
             margin-bottom: 25px;
             line-height: 1.6;
         }
@@ -919,6 +1099,60 @@
                 padding: 15px;
             }
 
+            .navbar {
+                padding: 15px 20px;
+                margin-bottom: 20px;
+            }
+
+            .nav-logo {
+                display: none;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100vh;
+                background: var(--bg-secondary);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 30px;
+                transition: left 0.3s ease;
+                z-index: 1000;
+                padding: 80px 20px 20px 20px;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .nav-links li a {
+                font-size: 24px;
+                padding: 15px 30px;
+                text-align: center;
+                width: 200px;
+                display: block;
+                border: 2px solid transparent;
+                border-radius: 15px;
+                background: var(--bg-tertiary);
+                margin: 10px 0;
+                box-shadow: 0 5px 15px var(--shadow-light);
+            }
+
+            .nav-links li a:hover {
+                transform: scale(1.05);
+                border-color: #4CAF50;
+                background: linear-gradient(45deg, #4CAF50, #45a049);
+                color: white !important;
+            }
+
             .header-content {
                 flex-direction: column;
                 gap: 20px;
@@ -939,13 +1173,16 @@
                 grid-template-columns: 1fr;
             }
 
-            .nav-links {
-                gap: 15px;
-            }
-
-            .nav-links li a {
+            .lang-btn {
                 padding: 8px 15px;
                 font-size: 14px;
+            }
+
+            .theme-toggle {
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+                margin-right: 10px;
             }
 
             .service-icon {
@@ -957,6 +1194,44 @@
             .floating-icon {
                 font-size: 18px;
                 opacity: 0.05;
+            }
+
+            .features {
+                padding: 25px;
+            }
+
+            .stats {
+                padding: 25px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            /* Mobile nav overlay */
+            .nav-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background: rgba(0, 0, 0, 0.5);
+                backdrop-filter: blur(0px);
+                z-index: 999;
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+            }
+
+            .nav-overlay.active {
+                opacity: 1;
+                visibility: visible;
             }
         }
 
@@ -1133,15 +1408,31 @@
     <div class="medical-pattern"></div>
 
     <nav class="navbar">
-    <ul class="nav-links">
-        <li><a href="#">Home</a></li>
-        <li><a href="#services">Services</a></li>
-        <li><a href="#pharmacy">Pharmacy</a></li>
-        <li><a href="#first-aid">First Aid</a></li>
-        <li><a href="#stats">Statistics</a></li>
-        <li><a href="#contact">Contact</a></li>
-    </ul>
-</nav>
+        <div class="nav-container">
+            <div class="nav-logo">
+                <div class="nav-logo-icon">N+</div>
+                <span>Nabha Healthcare</span>
+            </div>
+            
+            <div class="hamburger" onclick="toggleMobileNav()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#" data-en="Home" data-hi="होम" data-pa="ਘਰ" onclick="closeMobileNav()">Home</a></li>
+                <li><a href="#services" data-en="Services" data-hi="सेवाएं" data-pa="ਸੇਵਾਵਾਂ" onclick="closeMobileNav()">Services</a></li>
+                <li><a href="#pharmacy" data-en="Pharmacy" data-hi="फार्मेसी" data-pa="ਫਾਰਮੇਸੀ" onclick="closeMobileNav()">Pharmacy</a></li>
+                <li><a href="#first-aid" data-en="First Aid" data-hi="प्राथमिक चिकित्सा" data-pa="ਪਹਿਲੀ ਸਹਾਇਤਾ" onclick="closeMobileNav()">First Aid</a></li>
+                <li><a href="#stats" data-en="Statistics" data-hi="आंकड़े" data-pa="ਅੰਕੜੇ" onclick="closeMobileNav()">Statistics</a></li>
+                <li><a href="#contact" data-en="Contact" data-hi="संपर्क" data-pa="ਸੰਪਰਕ" onclick="closeMobileNav()">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <!-- Mobile nav overlay -->
+    <div class="nav-overlay" id="navOverlay" onclick="closeMobileNav()"></div>
     
     <div class="container">
         <header>
@@ -1154,6 +1445,9 @@
                     </div>
                 </div>
                 <div class="lang-selector">
+                    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Dark Mode">
+                        🌙
+                    </button>
                     <button class="lang-btn active" onclick="changeLanguage('en')">English</button>
                     <button class="lang-btn" onclick="changeLanguage('hi')">हिंदी</button>
                     <button class="lang-btn" onclick="changeLanguage('pa')">ਪੰਜਾਬੀ</button>
@@ -1375,6 +1669,94 @@
     <script>
         let currentLanguage = 'en';
         let isRecording = false;
+        let isDarkMode = false;
+
+        // Dark Mode Toggle
+        function toggleTheme() {
+            isDarkMode = !isDarkMode;
+            const body = document.body;
+            const themeToggle = document.querySelector('.theme-toggle');
+            
+            if (isDarkMode) {
+                body.setAttribute('data-theme', 'dark');
+                themeToggle.innerHTML = '☀️';
+                themeToggle.title = 'Toggle Light Mode';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                body.removeAttribute('data-theme');
+                themeToggle.innerHTML = '🌙';
+                themeToggle.title = 'Toggle Dark Mode';
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        // Load saved theme
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                isDarkMode = true;
+                document.body.setAttribute('data-theme', 'dark');
+                document.querySelector('.theme-toggle').innerHTML = '☀️';
+                document.querySelector('.theme-toggle').title = 'Toggle Light Mode';
+            }
+        }
+
+        function changeLanguage(lang) {
+            currentLanguage = lang;
+            
+            // Update active button
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Update all text elements with data attributes for the selected language
+            document.querySelectorAll(`[data-${lang}]`).forEach(element => {
+                element.textContent = element.getAttribute(`data-${lang}`);
+            });
+            
+            // Update placeholders
+            updatePlaceholders(lang);
+        }
+
+        // Mobile Navigation Functions
+        function toggleMobileNav() {
+            const navLinks = document.getElementById('navLinks');
+            const hamburger = document.querySelector('.hamburger');
+            const overlay = document.getElementById('navOverlay');
+            
+            if (!navLinks || !hamburger || !overlay) return;
+            
+            navLinks.classList.toggle('active');
+            hamburger.classList.toggle('active');
+            overlay.classList.toggle('active');
+            
+            // Prevent body scroll when menu is open
+            if (navLinks.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        function closeMobileNav() {
+            const navLinks = document.getElementById('navLinks');
+            const hamburger = document.querySelector('.hamburger');
+            const overlay = document.getElementById('navOverlay');
+            
+            if (!navLinks || !hamburger || !overlay) return;
+            
+            navLinks.classList.remove('active');
+            hamburger.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close mobile nav on window resize to desktop
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                closeMobileNav();
+            }
+        });
+
         let emergencySteps = {
             chest_pain: [
                 { en: "Have the person sit down and rest", hi: "व्यक्ति को बैठाएं और आराम कराएं", pa: "ਵਿਅਕਤੀ ਨੂੰ ਬਿਠਾਓ ਅਤੇ ਆਰਾਮ ਕਰਾਓ" },
@@ -1771,6 +2153,9 @@
 
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', () => {
+            // Load saved theme
+            loadTheme();
+            
             requestNotificationPermission();
             
             // Add some sample chat for demonstration
