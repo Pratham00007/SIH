@@ -702,11 +702,15 @@
 
                 <div style="margin-top: 2rem;">
                     <h3><i class="fas fa-map-marker-alt"></i> <span data-translate="doctor_locations">Doctor Locations</span></h3>
+                    <br>
+                    <br>
                     <div class="map-container">
-                        <i class="fas fa-map-marked-alt" style="font-size: 2rem; margin-right: 1rem;"></i>
-                        <span data-translate="interactive_map">Interactive Map Showing Nearby Doctors</span>
+                        
+                        <!-- Replace the text with an image of the map -->
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d13768.682098813835!2d76.15312291825492!3d30.37451532959944!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sdoctor%20in%20Nabha%2C%20Punjab!5e0!3m2!1sen!2sin!4v1757146056848!5m2!1sen!2sin" width="1000" height="350" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>    
                     </div>
                 </div>
+
             </section>
 
             <!-- Pharmacy Section -->
@@ -786,12 +790,13 @@
                     </div>
                 </div>
 
-                <div style="margin-top: 2rem;">
+                <div style="margin-top: 2rem;margin-left: 3rem;">
                     <h3><i class="fas fa-map-marker-alt"></i> <span data-translate="pharmacy_locations">Pharmacy Locations</span></h3>
-                    <div class="map-container">
-                        <i class="fas fa-map-marked-alt" style="font-size: 2rem; margin-right: 1rem;"></i>
-                        <span data-translate="pharmacy_map">Interactive Map Showing Nearby Pharmacies</span>
-                    </div>
+                    <br>
+                    <br>
+                    
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d16373.597472939295!2d76.1391191866135!3d30.375812328809634!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1spharmacy%20in%20Nabha%2C%20Punjab!5e0!3m2!1sen!2sin!4v1757145737899!5m2!1sen!2sin" width="1000" height="350" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>    
+                        
                 </div>
             </section>
 
@@ -808,6 +813,9 @@
                             <span data-translate="chatbot_greeting">Hello! I'm your AI health assistant. Please describe your symptoms, and I'll provide initial guidance. Remember, this is not a substitute for professional medical advice.</span>
                             <button class="voice-btn" onclick="speakText(this.previousElementSibling.textContent)">
                                 <i class="fas fa-volume-up"></i>
+                            </button>
+                            <button class="voice-btn" onclick="stopSpeaking()">
+                                <i class="fas fa-volume-mute"></i>
                             </button>
                         </div>
                     </div>
@@ -890,9 +898,10 @@
 
                 <div style="margin-top: 2rem;">
                     <h3><i class="fas fa-map-marked-alt"></i> <span data-translate="emergency_map">Emergency Personnel Map</span></h3>
+                    <br>
+                    <br>
                     <div class="map-container">
-                        <i class="fas fa-map-marked-alt" style="font-size: 2rem; margin-right: 1rem;"></i>
-                        <span data-translate="personnel_map">Map showing locations of trained personnel and emergency services</span>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3507.5653532266124!2d77.490025!3d28.462515999999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMjjCsDI3JzQ1LjEiTiA3N8KwMjknMjQuMSJF!5e0!3m2!1sen!2sin!4v1757146333606!5m2!1sen!2sin" width="1000" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>    
                     </div>
                 </div>
             </section>
@@ -1446,13 +1455,19 @@
             messageDiv.className = `message ${sender}`;
             
             if (sender === 'bot') {
-                messageDiv.innerHTML = `${message} <button class="voice-btn" onclick="speakText('${message.replace(/'/g, "\\'")}')"><i class="fas fa-volume-up"></i></button>`;
+                messageDiv.innerHTML = `${message} <button class="voice-btn" onclick="speakText(
+                '${message.replace(/'/g, "\\'")}')"><i class="fas fa-volume-up"></i></button>
+                <button class="voice-btn" onclick="stopSpeaking()"><i class="fas fa-volume-mute"></i></button>`;
+               
             } else {
                 messageDiv.textContent = message;
             }
             
             messagesContainer.appendChild(messageDiv);
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+        function stopSpeaking(){
+            speechSynthesis.cancel();
         }
 
         function generateAIResponse(userMessage) {
