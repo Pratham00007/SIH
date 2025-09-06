@@ -289,6 +289,26 @@
             color: var(--text-primary);
         }
 
+        /* Style the loader itself */
+.loader {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #ccc; /* Light gray border for the full circle */
+  border-top-color: #3498db; /* Blue color for the top part that will spin */
+  border-radius: 50%; /* Makes the square div into a circle */
+  animation: spin 1s linear infinite; /* Applies the spinning animation */
+}
+
+/* Define the animation */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
         /* Map Container */
         .map-container {
             height: 300px;
@@ -921,8 +941,10 @@
                             <p data-translate="connecting">Connecting to video call...</p>
                             <div style="margin-top: 2rem;">
                                 <div style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 0.5rem; display: inline-block;">
-                                    <p><i class="fas fa-clock"></i> <span data-translate="call_duration">Call Duration</span>: <span id="callTimer">00:00</span></p>
+                                    <div class="loader"></div>
+    
                                 </div>
+                                <br>
                             </div>
                         </div>
                     </div>
