@@ -3,2034 +3,1573 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nabha Healthcare - Rural Telemedicine Platform</title>
+    <title>Nabhya Arogya - Healthcare Platform</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        .navbar {
-            background: var(--bg-tertiary);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            margin-bottom: 25px;
-            box-shadow: 0 10px 35px var(--shadow-medium);
-            padding: 20px 35px;
-            position: sticky;
-            top: 10px;
-            z-index: 999;
-            border: 1px solid var(--border-color);
-            animation: slideInTop 0.8s ease-out;
-        }
-
-        .nav-links {
-            display: flex;
-            justify-content: center;
-            gap: 35px;
-            list-style: none;
-            flex-wrap: wrap;
-        }
-
-        .nav-links li a {
-            text-decoration: none;
-            color: var(--text-accent);
-            font-weight: 600;
-            font-size: 16px;
-            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            position: relative;
-            padding: 10px 20px;
-            border-radius: 25px;
-        }
-
-        .nav-links li a::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, #667eea, #764ba2);
-            border-radius: 25px;
-            opacity: 0;
-            transform: scale(0);
-            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            z-index: -1;
-        }
-
-        .nav-links li a::after {
-            content: '';
-            position: absolute;
-            width: 0%;
-            height: 2px;
-            bottom: 5px;
-            left: 50%;
-            background: linear-gradient(90deg, #667eea, #764ba2);
-            transition: all 0.4s ease;
-            transform: translateX(-50%);
-        }
-
-        .nav-links li a:hover::before {
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        .nav-links li a:hover::after {
-            width: 80%;
-        }
-
-        .nav-links li a:hover {
-            color: white;
-            transform: translateY(-3px);
-        }
-
-@media (max-width: 768px) {
-    .nav-links {
-        flex-direction: column;
-        align-items: center;
-        gap: 15px;
-    }
-}
-
-
-        :root {
-            --bg-primary: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-            --bg-secondary: rgba(255, 255, 255, 0.95);
-            --bg-tertiary: rgba(255, 255, 255, 0.9);
-            --text-primary: #333;
-            --text-secondary: #7f8c8d;
-            --text-accent: #2c3e50;
-            --border-color: rgba(255, 255, 255, 0.3);
-            --shadow-light: rgba(0, 0, 0, 0.1);
-            --shadow-medium: rgba(0, 0, 0, 0.15);
-            --shadow-heavy: rgba(0, 0, 0, 0.2);
-            --pattern-color: rgba(76, 175, 80, 0.03);
-            --floating-icon-opacity: 0.15;
-        }
-
-        [data-theme="dark"] {
-            --bg-primary: linear-gradient(-45deg, #1a1a2e, #16213e, #0f3460, #533483);
-            --bg-secondary: rgba(30, 30, 50, 0.95);
-            --bg-tertiary: rgba(40, 40, 60, 0.9);
-            --text-primary: #e8e8e8;
-            --text-secondary: #b8b8b8;
-            --text-accent: #ffffff;
-            --border-color: rgba(255, 255, 255, 0.1);
-            --shadow-light: rgba(0, 0, 0, 0.3);
-            --shadow-medium: rgba(0, 0, 0, 0.4);
-            --shadow-heavy: rgba(0, 0, 0, 0.5);
-            --pattern-color: rgba(76, 175, 80, 0.08);
-            --floating-icon-opacity: 0.25;
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #10b981;
+            --accent-color: #f59e0b;
+            --danger-color: #ef4444;
+            --background: #ffffff;
+            --surface: #f8fafc;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --border: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        [data-theme="dark"] {
+            --background: #0f172a;
+            --surface: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --border: #334155;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
+            background: var(--background);
             color: var(--text-primary);
-            background: var(--bg-primary);
-            background-size: 400% 400%;
-            animation: gradientShift 15s ease infinite;
-            min-height: 100vh;
-            overflow-x: hidden;
-            position: relative;
             transition: all 0.3s ease;
-        }
-
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* Floating particles background */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 20% 30%, rgba(76, 175, 80, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(33, 150, 243, 0.05) 0%, transparent 50%),
-                url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cpath d='M30 30h20v20H30z' fill='var(--pattern-color)'/%3E%3Cpath d='M30 10h20v20H30z' fill='var(--pattern-color)'/%3E%3C/g%3E%3C/svg%3E");
-            opacity: 0.8;
-            animation: bgPatternMove 30s linear infinite;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        [data-theme="dark"] body::before {
-            background: 
-                radial-gradient(circle at 20% 30%, rgba(76, 175, 80, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(33, 150, 243, 0.1) 0%, transparent 50%),
-                url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cpath d='M30 30h20v20H30z' fill='rgba(76, 175, 80, 0.08)'/%3E%3Cpath d='M30 10h20v20H30z' fill='rgba(33, 150, 243, 0.08)'/%3E%3C/g%3E%3C/svg%3E");
-        }
-
-        /* DNA Helix Animation in Background */
-        body::after {
-            content: '';
-            position: fixed;
-            top: 0;
-            right: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 50% var(--y, 50%), rgba(76, 175, 80, 0.1) 0%, transparent 60%),
-                radial-gradient(circle at calc(50% - 200px) var(--y, 50%), rgba(33, 150, 243, 0.1) 0%, transparent 60%);
-            animation: dnaHelix 15s infinite linear;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        @keyframes dnaHelix {
-            0%, 100% { --y: 0%; }
-            50% { --y: 100%; }
-        }
-
-        @keyframes bgPatternMove {
-            0% { background-position: 0 0; }
-            100% { background-position: 100px 100px; }
-        }
-
-        @keyframes floatingParticles {
-            0% { transform: translateY(0px) rotate(0deg); }
-            100% { transform: translateY(-1000px) rotate(360deg); }
+            line-height: 1.6;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
-            position: relative;
-            z-index: 2;
+            padding: 0 20px;
         }
 
-        /* Floating medical icons */
-        .floating-icons {
+        /* Header */
+        .header {
+            background: var(--surface);
+            padding: 1rem 0;
+            box-shadow: var(--shadow);
             position: fixed;
-            top: 0;
-            left: 0;
             width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .floating-icon {
-            position: absolute;
-            font-size: 28px;
-            opacity: var(--floating-icon-opacity);
-            filter: drop-shadow(0 0 10px rgba(255,255,255,0.3));
-            z-index: 2;
-            transition: all 0.3s ease;
-        }
-
-        [data-theme="dark"] .floating-icon {
-            filter: drop-shadow(0 0 15px rgba(76, 175, 80, 0.4));
-        }
-
-        .floating-icon:nth-child(1) { top: 15%; left: 10%; }
-        .floating-icon:nth-child(2) { top: 25%; right: 15%; }
-        .floating-icon:nth-child(3) { top: 65%; left: 8%; }
-        .floating-icon:nth-child(4) { bottom: 25%; right: 12%; }
-        .floating-icon:nth-child(5) { bottom: 45%; left: 18%; }
-        .floating-icon:nth-child(6) { top: 35%; right: 22%; }
-        .floating-icon:nth-child(7) { top: 75%; right: 28%; }
-        .floating-icon:nth-child(8) { top: 45%; left: 25%; }
-        .floating-icon:nth-child(9) { bottom: 35%; right: 35%; }
-        .floating-icon:nth-child(10) { top: 55%; left: 32%; }
-
-        .icon-pulse {
-            animation: iconPulse 3s ease-in-out infinite;
-        }
-
-        .icon-bounce {
-            animation: iconBounce 4s ease-in-out infinite;
-        }
-
-        .icon-rotate {
-            animation: iconRotate 5s linear infinite;
-        }
-
-        .icon-heartbeat {
-            animation: iconHeartbeat 2s ease-in-out infinite;
-        }
-
-        .icon-slide {
-            animation: iconSlide 6s ease-in-out infinite;
-        }
-
-        .icon-fade {
-            animation: iconFade 4s ease-in-out infinite;
-        }
-
-        .icon-scale {
-            animation: iconScale 5s ease-in-out infinite;
-        }
-
-        .icon-wave {
-            animation: iconWave 6s ease-in-out infinite;
-        }
-
-        @keyframes iconPulse {
-            0%, 100% { transform: scale(1); opacity: 0.15; }
-            50% { transform: scale(1.2); opacity: 0.3; }
-        }
-
-        @keyframes iconBounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-30px); }
-        }
-
-        @keyframes iconRotate {
-            0% { transform: rotate(0deg) translateX(20px) rotate(0deg); }
-            100% { transform: rotate(360deg) translateX(20px) rotate(-360deg); }
-        }
-
-        @keyframes iconHeartbeat {
-            0%, 100% { transform: scale(1); }
-            25% { transform: scale(1.1); }
-            35% { transform: scale(1); }
-            45% { transform: scale(1.2); }
-            55% { transform: scale(1); }
-        }
-
-        @keyframes iconSlide {
-            0%, 100% { transform: translateX(0); }
-            50% { transform: translateX(30px); }
-        }
-
-        @keyframes iconFade {
-            0%, 100% { opacity: 0.15; }
-            50% { opacity: 0.3; }
-        }
-
-        @keyframes iconScale {
-            0%, 100% { transform: scale(1) rotate(0deg); }
-            50% { transform: scale(1.2) rotate(180deg); }
-        }
-
-        @keyframes iconWave {
-            0%, 100% { transform: translateY(0) translateX(0); }
-            25% { transform: translateY(-15px) translateX(15px); }
-            50% { transform: translateY(0) translateX(30px); }
-            75% { transform: translateY(15px) translateX(15px); }
-        }
-
-        /* Medical Cross Pattern */
-        .medical-pattern {
-            position: fixed;
             top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                linear-gradient(to right, rgba(76, 175, 80, 0.03) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(76, 175, 80, 0.03) 1px, transparent 1px);
-            background-size: 30px 30px;
-            pointer-events: none;
-            z-index: 1;
-            animation: patternMove 20s linear infinite;
+            z-index: 1000;
         }
 
-        @keyframes patternMove {
-            0% { transform: translateX(0) translateY(0); }
-            100% { transform: translateX(30px) translateY(30px); }
-        }
-
-        header {
-            background: var(--bg-secondary);
-            backdrop-filter: blur(20px);
-            border-radius: 25px;
-            padding: 25px;
-            margin-bottom: 30px;
-            box-shadow: 0 15px 50px var(--shadow-medium);
-            border: 1px solid var(--border-color);
-            animation: slideInTop 1s ease-out;
-            position: relative;
-            overflow: hidden;
-        }
-
-        header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            animation: shimmer 3s infinite;
-        }
-
-        @keyframes shimmer {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-
-        @keyframes slideInTop {
-            from {
-                opacity: 0;
-                transform: translateY(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .header-content {
+        .nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
         }
 
         .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .logo-icon {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(45deg, #4CAF50, #45a049);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
+            font-size: 1.5rem;
             font-weight: bold;
-            font-size: 20px;
-            animation: logoSpin 4s ease-in-out infinite;
-            box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
+            color: var(--primary-color);
         }
 
-        @keyframes logoSpin {
-            0%, 100% { transform: rotate(0deg) scale(1); }
-            25% { transform: rotate(5deg) scale(1.1); }
-            50% { transform: rotate(-5deg) scale(1); }
-            75% { transform: rotate(3deg) scale(1.05); }
-        }
-
-        .logo h1 {
-            color: var(--text-accent);
-            font-size: 24px;
-            font-weight: 700;
-        }
-
-        .subtitle {
-            color: var(--text-secondary);
-            font-size: 14px;
-        }
-
-        .lang-selector {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .theme-toggle {
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            border: none;
-            border-radius: 50%;
-            width: 45px;
-            height: 45px;
-            cursor: pointer;
-            font-size: 20px;
-            color: white;
-            margin-right: 15px;
-            transition: all 0.4s ease;
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
-        }
-
-        .theme-toggle:hover {
-            transform: scale(1.1) rotate(10deg);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
-        }
-
-        .lang-btn {
-            padding: 10px 18px;
-            border: 2px solid #3498db;
-            background: transparent;
-            color: #3498db;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            font-size: 13px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        [data-theme="dark"] .lang-btn {
-            border-color: #42A5F5;
-            color: #42A5F5;
-        }
-
-        .lang-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(52, 152, 219, 0.2), transparent);
-            transition: left 0.5s;
-        }
-
-        .lang-btn:hover::before {
-            left: 100%;
-        }
-
-        .lang-btn.active, .lang-btn:hover {
-            background: #3498db;
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(52, 152, 219, 0.3);
-        }
-
-        [data-theme="dark"] .lang-btn.active, 
-        [data-theme="dark"] .lang-btn:hover {
-            background: #42A5F5;
-            color: white;
-        }
-
-
-
-        .main-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-            margin-bottom: 30px;
-        }
-
-        .service-card {
-            background: var(--bg-secondary);
-            backdrop-filter: blur(20px);
-            border-radius: 25px;
-            padding: 35px;
-            text-align: center;
-            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            box-shadow: 0 15px 50px var(--shadow-light);
-            border: 1px solid var(--border-color);
-            position: relative;
-            overflow: hidden;
-            animation: fadeInUp 0.8s ease-out forwards;
-            opacity: 0;
-            transform: translateY(30px);
-        }
-
-        .service-card:nth-child(1) { animation-delay: 0.2s; }
-        .service-card:nth-child(2) { animation-delay: 0.4s; }
-        .service-card:nth-child(3) { animation-delay: 0.6s; }
-
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .service-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left 0.5s;
-        }
-
-        .service-card:hover::before {
-            left: 100%;
-        }
-
-        .service-card:hover {
-            transform: translateY(-15px) scale(1.02);
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
-            border-color: rgba(76, 175, 80, 0.3);
-        }
-
-        .service-icon {
-            width: 90px;
-            height: 90px;
-            margin: 0 auto 25px;
-            border-radius: 50%;
+        .nav-controls {
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 42px;
-            color: white;
-            margin-bottom: 25px;
-            position: relative;
-            animation: iconBounce 2s ease-in-out infinite;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        }
-
-        @keyframes iconBounce {
-            0%, 100% { transform: translateY(0) scale(1); }
-            50% { transform: translateY(-5px) scale(1.05); }
-        }
-
-        .service-icon::after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background: inherit;
-            opacity: 0.3;
-            animation: ripple 2s infinite;
-        }
-
-        @keyframes ripple {
-            0% { transform: scale(1); opacity: 0.3; }
-            100% { transform: scale(1.4); opacity: 0; }
-        }
-
-        .appointment-icon {
-            background: linear-gradient(45deg, #4CAF50, #45a049, #66BB6A);
-        }
-
-        .emergency-icon {
-            background: linear-gradient(45deg, #f44336, #d32f2f, #FF5252);
-        }
-
-        .chat-icon {
-            background: linear-gradient(45deg, #2196F3, #1976D2, #42A5F5);
-        }
-
-        .service-card h3 {
-            font-size: 24px;
-            margin-bottom: 15px;
-            color: var(--text-accent);
-            position: relative;
-            display: inline-block;
-        }
-
-        .service-card p {
-            color: var(--text-secondary);
-            margin-bottom: 25px;
-            line-height: 1.6;
+            gap: 1rem;
         }
 
         .btn {
-            padding: 18px 35px;
+            padding: 0.5rem 1rem;
             border: none;
-            border-radius: 50px;
+            border-radius: 0.5rem;
             cursor: pointer;
-            font-size: 16px;
-            font-weight: 600;
-            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            text-decoration: none;
-            display: inline-block;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-        }
-
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.2);
-            transition: all 0.4s;
-            transform: translate(-50%, -50%);
-        }
-
-        .btn:hover::before {
-            width: 300px;
-            height: 300px;
-        }
-
-        .btn:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
-        }
-
-        .btn:active {
-            transform: translateY(-1px) scale(1.02);
+            font-size: 0.875rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         .btn-primary {
-            background: linear-gradient(45deg, #4CAF50, #45a049, #66BB6A);
+            background: var(--primary-color);
             color: white;
         }
 
-        .btn-emergency {
-            background: linear-gradient(45deg, #f44336, #d32f2f, #FF5252);
-            color: white;
+        .btn-primary:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
         }
 
         .btn-secondary {
-            background: linear-gradient(45deg, #2196F3, #1976D2, #42A5F5);
+            background: var(--surface);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-emergency {
+            background: var(--danger-color);
             color: white;
-        }
-
-        .features {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 25px;
-            padding: 45px;
-            margin-bottom: 30px;
-            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            animation: slideInRight 1s ease-out;
-        }
-
-        @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        .features h2 {
-            text-align: center;
-            margin-bottom: 30px;
-            color: #2c3e50;
-            font-size: 28px;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-        }
-
-        .feature-item {
-            padding: 25px;
-            background: linear-gradient(135deg, rgba(52, 152, 219, 0.1), rgba(155, 89, 182, 0.1));
-            border-radius: 20px;
-            text-align: center;
-            transition: all 0.4s ease;
-            border: 1px solid rgba(52, 152, 219, 0.2);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .feature-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
-            transform: translateX(-100%);
-            transition: transform 0.6s;
-        }
-
-        .feature-item:hover::before {
-            transform: translateX(100%);
-        }
-
-        .feature-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(52, 152, 219, 0.2);
-            border-color: rgba(52, 152, 219, 0.4);
-        }
-
-        .feature-item h4 {
-            color: #2c3e50;
-            margin-bottom: 10px;
-            font-size: 18px;
-        }
-
-        .feature-item p {
-            color: #7f8c8d;
-            font-size: 14px;
-        }
-
-
-        .close {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            font-size: 28px;
-            cursor: pointer;
-            color: #999;
-        }
-
-        .close:hover {
-            color: #333;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #2c3e50;
-        }
-
-        .form-group input, .form-group select, .form-group textarea {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 16px;
-            transition: border-color 0.3s ease;
-        }
-
-        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-            outline: none;
-            border-color: #3498db;
-        }
-
-        .emergency-modal {
-            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
-        }
-
-        .emergency-modal .modal-content {
-            border: 3px solid #f44336;
-        }
-
-        .emergency-actions {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .voice-input {
-            background: #4CAF50;
-            color: white;
-            border: none;
-            padding: 15px;
-            border-radius: 50px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .voice-input:hover {
-            background: #45a049;
-        }
-
-        .chat-interface {
-            height: 300px;
-            border: 2px solid #e0e0e0;
-            border-radius: 15px;
-            padding: 20px;
-            overflow-y: auto;
-            background: #f8f9fa;
-            margin-bottom: 15px;
-        }
-
-        .chat-message {
-            margin-bottom: 15px;
-            padding: 10px 15px;
-            border-radius: 15px;
-            max-width: 80%;
-        }
-
-        .user-message {
-            background: #3498db;
-            color: white;
-            margin-left: auto;
-        }
-
-        .bot-message {
-            background: white;
-            border: 2px solid #e0e0e0;
-        }
-
-        .pharmacy-card {
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 15px;
-            padding: 20px;
-            margin: 10px 0;
-            border-left: 5px solid #4CAF50;
-        }
-
-        .pharmacy-card h4 {
-            color: #2c3e50;
-            margin-bottom: 10px;
-        }
-
-        .pharmacy-card p {
-            color: #7f8c8d;
-            margin-bottom: 5px;
-        }
-
-        .status {
-            display: inline-block;
-            padding: 5px 10px;
-            border-radius: 15px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .available {
-            background: #d4edda;
-            color: #155724;
-        }
-
-        .limited {
-            background: #fff3cd;
-            color: #856404;
-        }
-
-        .out-of-stock {
-            background: #f8d7da;
-            color: #721c24;
-        }
-
-        .first-aid {
-            background: #fff3cd;
-            border: 2px solid #ffc107;
-            border-radius: 15px;
-            padding: 20px;
-            margin: 20px 0;
-        }
-
-        .first-aid h4 {
-            color: #856404;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .first-aid-steps {
-            list-style: none;
-            counter-reset: step-counter;
-        }
-
-        .first-aid-steps li {
-            counter-increment: step-counter;
-            margin-bottom: 10px;
-            padding-left: 30px;
-            position: relative;
-        }
-
-        .first-aid-steps li::before {
-            content: counter(step-counter);
-            position: absolute;
-            left: 0;
-            top: 0;
-            background: #ffc107;
-            color: #856404;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            font-weight: bold;
-        }
-
-        .stats {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 25px;
-            padding: 35px;
-            text-align: center;
-            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            animation: slideInLeft 1s ease-out;
-        }
-
-        @keyframes slideInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        .stats h3 {
-            color: #2c3e50;
-            margin-bottom: 20px;
-            font-size: 24px;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 20px;
-        }
-
-        .stat-item {
-            padding: 25px;
-            background: linear-gradient(135deg, #3498db, #2980b9, #5DADE2);
-            color: white;
-            border-radius: 20px;
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
-        }
-
-        .stat-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.2), transparent);
-            transform: translateX(-100%);
-            transition: transform 0.6s;
-        }
-
-        .stat-item:hover::before {
-            transform: translateX(100%);
-        }
-
-        .stat-item:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 15px 35px rgba(52, 152, 219, 0.4);
-        }
-
-        .stat-number {
-            font-size: 36px;
-            font-weight: bold;
-            display: block;
-            animation: countUp 2s ease-out;
-        }
-
-        @keyframes countUp {
-            from { transform: scale(0); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-
-        .stat-label {
-            font-size: 14px;
-            opacity: 0.9;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 15px;
-            }
-
-            .header-content {
-                flex-direction: column;
-                gap: 20px;
-            }
-
-            .main-content {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-
-            .modal-content {
-                width: 95%;
-                padding: 25px;
-                margin: 20px;
-            }
-
-            .emergency-actions {
-                grid-template-columns: 1fr;
-            }
-
-            .nav-links {
-                gap: 15px;
-            }
-
-            .nav-links li a {
-                padding: 8px 15px;
-                font-size: 14px;
-            }
-
-            .service-icon {
-                width: 70px;
-                height: 70px;
-                font-size: 32px;
-            }
-
-            .floating-icon {
-                font-size: 18px;
-                opacity: 0.05;
-            }
-        }
-
-        /* Scroll Animation */
-        .scroll-reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease-out;
-        }
-
-        .scroll-reveal.revealed {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Additional Hover Effects */
-        .lang-btn {
-            padding: 10px 18px;
-            border: 2px solid #3498db;
-            background: transparent;
-            color: #3498db;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            font-size: 13px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .lang-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(52, 152, 219, 0.2), transparent);
-            transition: left 0.5s;
-        }
-
-        .lang-btn:hover::before {
-            left: 100%;
-        }
-
-        .lang-btn.active, .lang-btn:hover {
-            background: #3498db;
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(52, 152, 219, 0.3);
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        .pulse {
             animation: pulse 2s infinite;
         }
 
         @keyframes pulse {
-            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(244, 67, 54, 0.7); }
-            70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(244, 67, 54, 0); }
-            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(244, 67, 54, 0); }
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
 
-        .recording {
-            background: #f44336 !important;
-            animation: recording-pulse 1s infinite;
+        /* Main Content */
+        .main {
+            margin-top: 80px;
+            padding: 2rem 0;
         }
 
-        @keyframes recording-pulse {
-            0% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.7; transform: scale(1.1); }
-            100% { opacity: 1; transform: scale(1); }
+        .hero {
+            text-align: center;
+            padding: 3rem 0;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 1rem;
+            margin-bottom: 3rem;
         }
 
-        /* Enhanced Modal Animations */
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Feature Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .feature-card {
+            background: var(--surface);
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border: 1px solid var(--border);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        /* Sections */
+        .section {
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: var(--surface);
+            border-radius: 1rem;
+            border: 1px solid var(--border);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Doctor Cards */
+        .doctors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .doctor-card {
+            background: var(--background);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .doctor-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+
+        .doctor-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .doctor-avatar {
+            width: 60px;
+            height: 60px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .status-available {
+            color: var(--secondary-color);
+        }
+
+        .status-busy {
+            color: var(--accent-color);
+        }
+
+        /* Chat Interface */
+        .chat-container {
+            background: var(--background);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+        }
+
+        .message {
+            margin-bottom: 1rem;
+            padding: 0.75rem;
+            border-radius: 1rem;
+            max-width: 80%;
+        }
+
+        .message.user {
+            background: var(--primary-color);
+            color: white;
+            margin-left: auto;
+        }
+
+        .message.bot {
+            background: var(--surface);
+            border: 1px solid var(--border);
+        }
+
+        .chat-input {
+            display: flex;
+            padding: 1rem;
+            border-top: 1px solid var(--border);
+            gap: 0.5rem;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            background: var(--background);
+            color: var(--text-primary);
+        }
+
+        /* Map Container */
+        .map-container {
+            height: 300px;
+            background: var(--surface);
+            border: 2px dashed var(--border);
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        /* Pharmacy Cards */
+        .pharmacy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .pharmacy-card {
+            background: var(--background);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            border: 1px solid var(--border);
+        }
+
+        .pharmacy-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .pharmacy-status {
+            display: flex;
+            gap: 1rem;
+            margin: 0.5rem 0;
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .status-open {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status-delivery {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        /* Video Call Interface */
+        .video-call {
+            background: #000;
+            border-radius: 1rem;
+            overflow: hidden;
+            position: relative;
+            height: 400px;
+        }
+
+        .video-screen {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .video-controls {
+            position: absolute;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 1rem;
+        }
+
+        .video-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .video-btn.mute {
+            background: var(--accent-color);
+        }
+
+        .video-btn.video {
+            background: var(--secondary-color);
+        }
+
+        .video-btn.end {
+            background: var(--danger-color);
+        }
+
+        /* Emergency Section */
+        .emergency-section {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border: 2px solid var(--accent-color);
+        }
+
+        .emergency-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .emergency-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        /* Forms */
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            background: var(--background);
+            color: var(--text-primary);
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            background: var(--background);
+            color: var(--text-primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-controls {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        /* Hidden sections */
+        .hidden {
+            display: none !important;
+        }
+
+        /* Modal */
         .modal {
-            display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 1000;
-            backdrop-filter: blur(8px);
-            animation: modalFadeIn 0.3s ease-out;
-        }
-
-        @keyframes modalFadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
         }
 
         .modal-content {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            border-radius: 25px;
-            padding: 45px;
-            width: 90%;
+            background: var(--background);
+            padding: 2rem;
+            border-radius: 1rem;
             max-width: 500px;
+            width: 90%;
             max-height: 80vh;
             overflow-y: auto;
-            box-shadow: 0 25px 75px rgba(0, 0, 0, 0.3);
-            animation: modalSlideIn 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
-        @keyframes modalSlideIn {
-            from {
-                opacity: 0;
-                transform: translate(-50%, -60%) scale(0.8);
-            }
-            to {
-                opacity: 1;
-                transform: translate(-50%, -50%) scale(1);
-            }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
         }
 
-        /* Glowing Effects */
-        .btn-emergency {
-            animation: emergencyGlow 2s ease-in-out infinite alternate;
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-secondary);
         }
 
-        @keyframes emergencyGlow {
-            from { box-shadow: 0 8px 25px rgba(244, 67, 54, 0.3); }
-            to { box-shadow: 0 8px 35px rgba(244, 67, 54, 0.6); }
+        /* Voice button */
+        .voice-btn {
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            margin-left: 0.5rem;
         }
 
-        /* Loading Spinner */
-        .loading {
-            width: 20px;
-            height: 20px;
-            border: 2px solid rgba(255,255,255,0.3);
-            border-radius: 50%;
-            border-top-color: white;
-            animation: spin 1s ease-in-out infinite;
-            display: inline-block;
-            margin-left: 10px;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        .language-content {
-            display: none;
-        }
-
-        .language-content.active {
-            display: block;
+        .voice-btn:hover {
+            background: #059669;
         }
     </style>
 </head>
-<body>
-    <!-- Floating Medical Icons -->
-    <div class="floating-icons">
-        <div class="floating-icon icon-pulse">🏥</div>
-        <div class="floating-icon icon-bounce">💊</div>
-        <div class="floating-icon icon-rotate">🩺</div>
-        <div class="floating-icon icon-heartbeat">❤️</div>
-        <div class="floating-icon icon-slide">🚑</div>
-        <div class="floating-icon icon-fade">💉</div>
-        <div class="floating-icon icon-scale">🧬</div>
-        <div class="floating-icon icon-wave">👨‍⚕️</div>
-        <div class="floating-icon icon-pulse">🫀</div>
-        <div class="floating-icon icon-bounce">🧪</div>
-    </div>
-
-    <!-- Medical Cross Pattern -->
-    <div class="medical-pattern"></div>
-
-    <nav class="navbar">
-    <ul class="nav-links">
-        <li><a href="#" data-en="Home" data-hi="होम" data-pa="ਘਰ">Home</a></li>
-        <li><a href="#services" data-en="Services" data-hi="सेवाएं" data-pa="ਸੇਵਾਵਾਂ">Services</a></li>
-        <li><a href="#pharmacy" data-en="Pharmacy" data-hi="फार्मेसी" data-pa="ਫਾਰਮੇਸੀ">Pharmacy</a></li>
-        <li><a href="#first-aid" data-en="First Aid" data-hi="प्राथमिक चिकित्सा" data-pa="ਪਹਿਲੀ ਸਹਾਇਤਾ">First Aid</a></li>
-        <li><a href="#stats" data-en="Statistics" data-hi="आंकड़े" data-pa="ਅੰਕੜੇ">Statistics</a></li>
-        <li><a href="#contact" data-en="Contact" data-hi="संपर्क" data-pa="ਸੰਪਰਕ">Contact</a></li>
-    </ul>
-</nav>
-    
-    <div class="container">
-        <header>
-            <div class="header-content">
+<body data-theme="light">
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
                 <div class="logo">
-                    <div class="logo-icon">N+</div>
-                    <div>
-                        <h1 data-en="Nabha Healthcare" data-hi="नाभा स्वास्थ्य सेवा" data-pa="ਨਾਭਾ ਸਿਹਤ ਸੇਵਾ">Nabha Healthcare</h1>
-                        <div class="subtitle" data-en="Rural Telemedicine Platform" data-hi="ग्रामीण टेलीमेडिसिन प्लेटफॉर्म" data-pa="ਪੇਂਡੂ ਟੈਲੀਮੈਡੀਸਿਨ ਪਲੇਟਫਾਰਮ">Rural Telemedicine Platform</div>
+                    <i class="fas fa-heartbeat"></i> Nabhya Arogya
+                </div>
+                <div class="nav-controls">
+                    <select id="languageSelect" class="form-select">
+                        <option value="en">English</option>
+                        <option value="hi">हिंदी</option>
+                        <option value="pa">ਪੰਜਾਬੀ</option>
+                    </select>
+                    <button id="themeToggle" class="btn btn-secondary">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button class="btn btn-emergency" onclick="showEmergency()">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <span data-translate="emergency">Emergency</span>
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Hero Section -->
+            <section class="hero fade-in">
+                <h1 data-translate="hero_title">Your Health, Our Priority</h1>
+                <p data-translate="hero_subtitle">Complete healthcare solutions at your fingertips</p>
+                <button class="btn btn-primary" onclick="showSection('doctors')">
+                    <i class="fas fa-user-md"></i>
+                    <span data-translate="find_doctor">Find a Doctor</span>
+                </button>
+            </section>
+
+            <!-- Features Grid -->
+            <section class="features-grid">
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <h3 class="feature-title" data-translate="doctor_consultation">Doctor Consultation</h3>
+                    <p data-translate="doctor_consultation_desc">Find nearby doctors, check availability, and book appointments</p>
+                    <button class="btn btn-primary" onclick="showSection('doctors')">
+                        <span data-translate="explore">Explore</span>
+                    </button>
+                </div>
+
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-pills"></i>
+                    </div>
+                    <h3 class="feature-title" data-translate="pharmacy_finder">Pharmacy Finder</h3>
+                    <p data-translate="pharmacy_finder_desc">Locate nearby pharmacies with medicine availability</p>
+                    <button class="btn btn-primary" onclick="showSection('pharmacy')">
+                        <span data-translate="explore">Explore</span>
+                    </button>
+                </div>
+
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3 class="feature-title" data-translate="ai_symptom_checker">AI Symptom Checker</h3>
+                    <p data-translate="ai_symptom_checker_desc">Get instant health advice from our AI assistant</p>
+                    <button class="btn btn-primary" onclick="showSection('chatbot')">
+                        <span data-translate="explore">Explore</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Doctors Section -->
+            <section id="doctorsSection" class="section hidden">
+                <h2 class="section-title">
+                    <i class="fas fa-user-md"></i>
+                    <span data-translate="nearby_doctors">Nearby Doctors</span>
+                </h2>
+                
+                <div class="doctors-grid">
+                    <div class="doctor-card">
+                        <div class="doctor-info">
+                            <div class="doctor-avatar">
+                                <i class="fas fa-user-md"></i>
+                            </div>
+                            <div>
+                                <h4>Dr. Priya Sharma</h4>
+                                <p data-translate="cardiologist">Cardiologist</p>
+                                <p class="status-available">
+                                    <i class="fas fa-circle"></i> 
+                                    <span data-translate="available">Available</span>
+                                </p>
+                            </div>
+                        </div>
+                        <p><i class="fas fa-clock"></i> 9:00 AM - 5:00 PM</p>
+                        <p><i class="fas fa-map-marker-alt"></i> 2.5 km away</p>
+                        <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
+                            <button class="btn btn-primary" onclick="bookAppointment('Dr. Priya Sharma')">
+                                <span data-translate="book_appointment">Book Appointment</span>
+                            </button>
+                            <button class="btn btn-secondary" onclick="callDoctor('Dr. Priya Sharma')">
+                                <i class="fas fa-phone"></i>
+                            </button>
+                            <button class="btn btn-secondary" onclick="videoCall('Dr. Priya Sharma')">
+                                <i class="fas fa-video"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="doctor-card">
+                        <div class="doctor-info">
+                            <div class="doctor-avatar">
+                                <i class="fas fa-user-md"></i>
+                            </div>
+                            <div>
+                                <h4>Dr. Rajesh Kumar</h4>
+                                <p data-translate="general_physician">General Physician</p>
+                                <p class="status-busy">
+                                    <i class="fas fa-circle"></i> 
+                                    <span data-translate="busy">Busy</span>
+                                </p>
+                            </div>
+                        </div>
+                        <p><i class="fas fa-clock"></i> 10:00 AM - 8:00 PM</p>
+                        <p><i class="fas fa-map-marker-alt"></i> 1.8 km away</p>
+                        <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
+                            <button class="btn btn-primary" onclick="bookAppointment('Dr. Rajesh Kumar')">
+                                <span data-translate="book_appointment">Book Appointment</span>
+                            </button>
+                            <button class="btn btn-emergency" onclick="emergencyCall()">
+                                <i class="fas fa-phone"></i>
+                                <span data-translate="emergency_call">Emergency Call</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="doctor-card">
+                        <div class="doctor-info">
+                            <div class="doctor-avatar">
+                                <i class="fas fa-user-md"></i>
+                            </div>
+                            <div>
+                                <h4>Dr. Simran Kaur</h4>
+                                <p data-translate="pediatrician">Pediatrician</p>
+                                <p class="status-available">
+                                    <i class="fas fa-circle"></i> 
+                                    <span data-translate="available">Available</span>
+                                </p>
+                            </div>
+                        </div>
+                        <p><i class="fas fa-clock"></i> 8:00 AM - 6:00 PM</p>
+                        <p><i class="fas fa-map-marker-alt"></i> 3.2 km away</p>
+                        <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
+                            <button class="btn btn-primary" onclick="bookAppointment('Dr. Simran Kaur')">
+                                <span data-translate="book_appointment">Book Appointment</span>
+                            </button>
+                            <button class="btn btn-secondary" onclick="callDoctor('Dr. Simran Kaur')">
+                                <i class="fas fa-phone"></i>
+                            </button>
+                            <button class="btn btn-secondary" onclick="videoCall('Dr. Simran Kaur')">
+                                <i class="fas fa-video"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
-                <div class="lang-selector">
-                    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Dark Mode">
-                        🌙
-                    </button>
-                    <button class="lang-btn active" onclick="changeLanguage('en')">English</button>
-                    <button class="lang-btn" onclick="changeLanguage('hi')">हिंदी</button>
-                    <button class="lang-btn" onclick="changeLanguage('pa')">ਪੰਜਾਬੀ</button>
+
+                <div style="margin-top: 2rem;">
+                    <h3><i class="fas fa-map-marker-alt"></i> <span data-translate="doctor_locations">Doctor Locations</span></h3>
+                    <div class="map-container">
+                        <i class="fas fa-map-marked-alt" style="font-size: 2rem; margin-right: 1rem;"></i>
+                        <span data-translate="interactive_map">Interactive Map Showing Nearby Doctors</span>
+                    </div>
                 </div>
-            </div>
-        </header>
+            </section>
 
-        <div class="main-content">
-            <div class="service-card">
-                <div class="service-icon appointment-icon">📅</div>
-                <h3 data-en="Book Appointment" data-hi="अपॉइंटमेंट बुक करें" data-pa="ਮੁਲਾਕਾਤ ਬੁੱਕ ਕਰੋ">Book Appointment</h3>
-                <p data-en="Schedule consultations with available doctors. Home sample collection and hospital visits only when necessary." data-hi="उपलब्ध डॉक्टरों के साथ परामर्श शेड्यूल करें। घर पर नमूना संग्रह और आवश्यक होने पर ही अस्पताल की यात्रा।" data-pa="ਉਪਲਬਧ ਡਾਕਟਰਾਂ ਨਾਲ ਸਲਾਹ ਕਰੋ। ਘਰ ਵਿੱਚ ਨਮੂਨਾ ਇਕੱਠਾ ਕਰਨਾ ਅਤੇ ਲੋੜ ਪੈਣ 'ਤੇ ਹੀ ਹਸਪਤਾਲ ਜਾਣਾ।">Schedule consultations with available doctors. Home sample collection and hospital visits only when necessary.</p>
-                <button class="btn btn-primary" onclick="openModal('appointmentModal')" data-en="Book Now" data-hi="अभी बुक करें" data-pa="ਹੁਣੇ ਬੁੱਕ ਕਰੋ">Book Now</button>
-            </div>
+            <!-- Pharmacy Section -->
+            <section id="pharmacySection" class="section hidden">
+                <h2 class="section-title">
+                    <i class="fas fa-pills"></i>
+                    <span data-translate="nearby_pharmacies">Nearby Pharmacies</span>
+                </h2>
+                
+                <div class="pharmacy-grid">
+                    <div class="pharmacy-card">
+                        <div class="pharmacy-header">
+                            <h4>MedPlus Pharmacy</h4>
+                            <div class="pharmacy-status">
+                                <span class="status-badge status-open" data-translate="open">Open</span>
+                                <span class="status-badge status-delivery" data-translate="home_delivery">Home Delivery</span>
+                            </div>
+                        </div>
+                        <p><i class="fas fa-user"></i> <span data-translate="owner">Owner</span>: Amit Singh</p>
+                        <p><i class="fas fa-clock"></i> 8:00 AM - 10:00 PM</p>
+                        <p><i class="fas fa-map-marker-alt"></i> 1.2 km away</p>
+                        <p><i class="fas fa-phone"></i> +91 98765-43210</p>
+                        <p><i class="fas fa-check-circle" style="color: var(--secondary-color);"></i> <span data-translate="medicines_available">Most medicines available</span></p>
+                        <div style="margin-top: 1rem;">
+                            <button class="btn btn-primary" onclick="checkMedicineStock('MedPlus')">
+                                <span data-translate="check_stock">Check Stock</span>
+                            </button>
+                            <button class="btn btn-secondary" onclick="orderMedicine('MedPlus')">
+                                <span data-translate="order_online">Order Online</span>
+                            </button>
+                        </div>
+                    </div>
 
-            <div class="service-card">
-                <div class="service-icon emergency-icon">🚨</div>
-                <h3 data-en="Emergency Need" data-hi="आपातकालीन आवश्यकता" data-pa="ਐਮਰਜੈਂਸੀ ਦੀ ਲੋੜ">Emergency Need</h3>
-                <p data-en="Immediate help with AI chatbot, first aid guidance, doctor calling, and ambulance service with GPS tracking." data-hi="AI चैटबॉट, प्राथमिक चिकित्सा मार्गदर्शन, डॉक्टर कॉल और GPS ट्रैकिंग के साथ एम्बुलेंस सेवा के साथ तत्काल सहायता।" data-pa="AI ਚੈਟਬਾਟ, ਪਹਿਲੀ ਸਹਾਇਤਾ ਮਾਰਗਦਰਸ਼ਨ, ਡਾਕਟਰ ਕਾਲ ਅਤੇ GPS ਟਰੈਕਿੰਗ ਨਾਲ ਐਂਬੂਲੈਂਸ ਸੇਵਾ ਨਾਲ ਤੁਰੰਤ ਸਹਾਇਤਾ।">Immediate help with AI chatbot, first aid guidance, doctor calling, and ambulance service with GPS tracking.</p>
-                <button class="btn btn-emergency pulse" onclick="openModal('emergencyModal')" data-en="Get Help Now" data-hi="अभी सहायता प्राप्त करें" data-pa="ਹੁਣੇ ਮਦਦ ਲਓ">Get Help Now</button>
-            </div>
+                    <div class="pharmacy-card">
+                        <div class="pharmacy-header">
+                            <h4>Apollo Pharmacy</h4>
+                            <div class="pharmacy-status">
+                                <span class="status-badge status-open" data-translate="open">Open</span>
+                                <span class="status-badge status-delivery" data-translate="home_delivery">Home Delivery</span>
+                            </div>
+                        </div>
+                        <p><i class="fas fa-user"></i> <span data-translate="owner">Owner</span>: Priya Patel</p>
+                        <p><i class="fas fa-clock"></i> 24 Hours</p>
+                        <p><i class="fas fa-map-marker-alt"></i> 2.1 km away</p>
+                        <p><i class="fas fa-phone"></i> +91 98765-12345</p>
+                        <p><i class="fas fa-check-circle" style="color: var(--secondary-color);"></i> <span data-translate="medicines_available">Most medicines available</span></p>
+                        <div style="margin-top: 1rem;">
+                            <button class="btn btn-primary" onclick="checkMedicineStock('Apollo')">
+                                <span data-translate="check_stock">Check Stock</span>
+                            </button>
+                            <button class="btn btn-secondary" onclick="orderMedicine('Apollo')">
+                                <span data-translate="order_online">Order Online</span>
+                            </button>
+                        </div>
+                    </div>
 
-            <div class="service-card">
-                <div class="service-icon chat-icon">💬</div>
-                <h3 data-en="Chat with Doctor" data-hi="डॉक्टर से चैट करें" data-pa="ਡਾਕਟਰ ਨਾਲ ਗੱਲਬਾਤ ਕਰੋ">Chat with Doctor</h3>
-                <p data-en="Consult for ongoing conditions like diabetes, fever, or other health concerns. Get medicine recommendations with pharmacy locations." data-hi="मधुमेह, बुखार या अन्य स्वास्थ्य चिंताओं जैसी चल रही स्थितियों के लिए परामर्श लें। फार्मेसी स्थानों के साथ दवा सिफारिशें प्राप्त करें।" data-pa="ਸ਼ੂਗਰ, ਬੁਖਾਰ ਜਾਂ ਹੋਰ ਸਿਹਤ ਚਿੰਤਾਵਾਂ ਵਰਗੀਆਂ ਜਾਰੀ ਸਥਿਤੀਆਂ ਲਈ ਸਲਾਹ ਲਓ। ਫਾਰਮੇਸੀ ਸਥਾਨਾਂ ਨਾਲ ਦਵਾਈ ਸਿਫ਼ਾਰਸ਼ਾਂ ਪ੍ਰਾਪਤ ਕਰੋ।">Consult for ongoing conditions like diabetes, fever, or other health concerns. Get medicine recommendations with pharmacy locations.</p>
-                <button class="btn btn-secondary" onclick="openModal('chatModal')" data-en="Start Chat" data-hi="चैट शुरू करें" data-pa="ਗੱਲਬਾਤ ਸ਼ੁਰੂ ਕਰੋ">Start Chat</button>
-            </div>
+                    <div class="pharmacy-card">
+                        <div class="pharmacy-header">
+                            <h4>Local Medical Store</h4>
+                            <div class="pharmacy-status">
+                                <span class="status-badge status-open" data-translate="open">Open</span>
+                            </div>
+                        </div>
+                        <p><i class="fas fa-user"></i> <span data-translate="owner">Owner</span>: Harpreet Singh</p>
+                        <p><i class="fas fa-clock"></i> 7:00 AM - 9:00 PM</p>
+                        <p><i class="fas fa-map-marker-alt"></i> 0.8 km away</p>
+                        <p><i class="fas fa-phone"></i> +91 98765-67890</p>
+                        <p><i class="fas fa-exclamation-triangle" style="color: var(--accent-color);"></i> <span data-translate="limited_stock">Limited stock available</span></p>
+                        <div style="margin-top: 1rem;">
+                            <button class="btn btn-primary" onclick="checkMedicineStock('Local')">
+                                <span data-translate="check_stock">Check Stock</span>
+                            </button>
+                            <button class="btn btn-secondary" onclick="callPharmacy('+91 98765-67890')">
+                                <i class="fas fa-phone"></i> <span data-translate="call">Call</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 2rem;">
+                    <h3><i class="fas fa-map-marker-alt"></i> <span data-translate="pharmacy_locations">Pharmacy Locations</span></h3>
+                    <div class="map-container">
+                        <i class="fas fa-map-marked-alt" style="font-size: 2rem; margin-right: 1rem;"></i>
+                        <span data-translate="pharmacy_map">Interactive Map Showing Nearby Pharmacies</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- AI Chatbot Section -->
+            <section id="chatbotSection" class="section hidden">
+                <h2 class="section-title">
+                    <i class="fas fa-robot"></i>
+                    <span data-translate="ai_health_assistant">AI Health Assistant</span>
+                </h2>
+                
+                <div class="chat-container">
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="message bot">
+                            <span data-translate="chatbot_greeting">Hello! I'm your AI health assistant. Please describe your symptoms, and I'll provide initial guidance. Remember, this is not a substitute for professional medical advice.</span>
+                            <button class="voice-btn" onclick="speakText(this.previousElementSibling.textContent)">
+                                <i class="fas fa-volume-up"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="chat-input">
+                        <input type="text" id="chatInput" data-translate-placeholder="type_symptoms" placeholder="Describe your symptoms...">
+                        <button class="btn btn-primary" onclick="sendMessage()">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div style="margin-top: 1rem; text-align: center;">
+                    <p style="color: var(--text-secondary); font-size: 0.875rem;" data-translate="ai_disclaimer">
+                        AI responses are for informational purposes only. Please consult a healthcare professional for proper diagnosis and treatment.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Emergency Section -->
+            <section id="emergencySection" class="section emergency-section hidden">
+                <h2 class="section-title">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span data-translate="emergency_services">Emergency Services</span>
+                </h2>
+                
+                <div class="emergency-grid">
+                    <div class="emergency-card">
+                        <i class="fas fa-ambulance" style="font-size: 3rem; color: var(--danger-color); margin-bottom: 1rem;"></i>
+                        <h4 data-translate="call_ambulance">Call Ambulance</h4>
+                        <p data-translate="ambulance_desc">Emergency medical transport</p>
+                        <button class="btn btn-emergency" onclick="callAmbulance()">
+                            <i class="fas fa-phone"></i>
+                            <span data-translate="call_now">Call Now</span>
+                        </button>
+                    </div>
+
+                    <div class="emergency-card">
+                        <i class="fas fa-user-nurse" style="font-size: 3rem; color: var(--secondary-color); margin-bottom: 1rem;"></i>
+                        <h4 data-translate="trained_personnel">Village Trained Personnel</h4>
+                        <p data-translate="personnel_desc">Local healthcare worker nearby</p>
+                        <button class="btn btn-primary" onclick="findTrainedPersonnel()">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span data-translate="locate">Locate</span>
+                        </button>
+                    </div>
+
+                    <div class="emergency-card">
+                        <i class="fas fa-phone-alt" style="font-size: 3rem; color: var(--primary-color); margin-bottom: 1rem;"></i>
+                        <h4 data-translate="emergency_hotline">Emergency Hotline</h4>
+                        <p data-translate="hotline_desc">24/7 medical helpline</p>
+                        <button class="btn btn-primary" onclick="callEmergencyHotline()">
+                            <i class="fas fa-phone"></i>
+                            <span data-translate="call">Call</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div style="margin-top: 2rem;">
+                    <h3><i class="fas fa-map-marker-alt"></i> <span data-translate="emergency_contacts">Emergency Contacts</span></h3>
+                    <div class="emergency-grid" style="margin-top: 1rem;">
+                        <div class="emergency-card">
+                            <h5>Ravi Sharma - <span data-translate="trained_nurse">Trained Nurse</span></h5>
+                            <p><i class="fas fa-map-marker-alt"></i> 0.5 km away</p>
+                            <p><i class="fas fa-phone"></i> +91 98765-11111</p>
+                            <button class="btn btn-secondary" onclick="contactPersonnel('+91 98765-11111', 'Ravi Sharma')">
+                                <span data-translate="contact">Contact</span>
+                            </button>
+                        </div>
+
+                        <div class="emergency-card">
+                            <h5>Sunita Devi - <span data-translate="first_aid_expert">First Aid Expert</span></h5>
+                            <p><i class="fas fa-map-marker-alt"></i> 1.2 km away</p>
+                            <p><i class="fas fa-phone"></i> +91 98765-22222</p>
+                            <button class="btn btn-secondary" onclick="contactPersonnel('+91 98765-22222', 'Sunita Devi')">
+                                <span data-translate="contact">Contact</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 2rem;">
+                    <h3><i class="fas fa-map-marked-alt"></i> <span data-translate="emergency_map">Emergency Personnel Map</span></h3>
+                    <div class="map-container">
+                        <i class="fas fa-map-marked-alt" style="font-size: 2rem; margin-right: 1rem;"></i>
+                        <span data-translate="personnel_map">Map showing locations of trained personnel and emergency services</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Video Call Section -->
+            <section id="videoCallSection" class="section hidden">
+                <h2 class="section-title">
+                    <i class="fas fa-video"></i>
+                    <span data-translate="video_consultation">Video Consultation</span>
+                </h2>
+                
+                <div class="video-call">
+                    <div class="video-screen">
+                        <div style="text-align: center;">
+                            <i class="fas fa-user-md" style="font-size: 4rem; margin-bottom: 1rem;"></i>
+                            <h3 id="doctorName">Dr. Priya Sharma</h3>
+                            <p data-translate="connecting">Connecting to video call...</p>
+                            <div style="margin-top: 2rem;">
+                                <div style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 0.5rem; display: inline-block;">
+                                    <p><i class="fas fa-clock"></i> <span data-translate="call_duration">Call Duration</span>: <span id="callTimer">00:00</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="video-controls">
+                        <button class="video-btn mute" onclick="toggleMute()" title="Mute/Unmute">
+                            <i class="fas fa-microphone"></i>
+                        </button>
+                        <button class="video-btn video" onclick="toggleVideo()" title="Camera On/Off">
+                            <i class="fas fa-video"></i>
+                        </button>
+                        <button class="video-btn end" onclick="endCall()" title="End Call">
+                            <i class="fas fa-phone-slash"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 1rem; text-align: center;">
+                    <p style="color: var(--text-secondary);" data-translate="demo_call">This is a demo video call interface. In real implementation, this would connect to the doctor.</p>
+                </div>
+            </section>
         </div>
+    </main>
 
-        <div class="features">
-            <h2 data-en="Platform Features" data-hi="प्लेटफॉर्म की विशेषताएं" data-pa="ਪਲੇਟਫਾਰਮ ਦੀਆਂ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ">Platform Features</h2>
-            <div class="features-grid">
-                <div class="feature-item">
-                    <h4 data-en="Multilingual Support" data-hi="बहुभाषी समर्थन" data-pa="ਬਹੁ-ਭਾਸ਼ਾ ਸਹਾਇਤਾ">Multilingual Support</h4>
-                    <p data-en="Voice and text input in English, Hindi, and Punjabi" data-hi="अंग्रेजी, हिंदी और पंजाबी में आवाज और पाठ इनपुट" data-pa="ਅੰਗਰੇਜ਼ੀ, ਹਿੰਦੀ ਅਤੇ ਪੰਜਾਬੀ ਵਿੱਚ ਆਵਾਜ਼ ਅਤੇ ਟੈਕਸਟ ਇਨਪੁਟ">Voice and text input in English, Hindi, and Punjabi</p>
-                </div>
-                <div class="feature-item">
-                    <h4 data-en="Offline Access" data-hi="ऑफलाइन पहुंच" data-pa="ਆਫਲਾਈਨ ਪਹੁੰਚ">Offline Access</h4>
-                    <p data-en="Digital health records accessible without internet" data-hi="इंटरनेट के बिना डिजिटल स्वास्थ्य रिकॉर्ड उपलब्ध" data-pa="ਇੰਟਰਨੈਟ ਤੋਂ ਬਿਨਾਂ ਡਿਜੀਟਲ ਸਿਹਤ ਰਿਕਾਰਡ ਉਪਲਬਧ">Digital health records accessible without internet</p>
-                </div>
-                <div class="feature-item">
-                    <h4 data-en="Home Sample Collection" data-hi="घर पर नमूना संग्रह" data-pa="ਘਰ ਵਿੱਚ ਨਮੂਨਾ ਇਕੱਠਾ ਕਰਨਾ">Home Sample Collection</h4>
-                    <p data-en="Lab tests at your doorstep with digital reports" data-hi="डिजिटल रिपोर्ट के साथ आपके घर पर लैब टेस्ट" data-pa="ਡਿਜੀਟਲ ਰਿਪੋਰਟਾਂ ਨਾਲ ਤੁਹਾਡੇ ਘਰ ਵਿੱਚ ਲੈਬ ਟੈਸਟ">Lab tests at your doorstep with digital reports</p>
-                </div>
-                <div class="feature-item">
-                    <h4 data-en="Medicine Tracking" data-hi="दवा ट्रैकिंग" data-pa="ਦਵਾਈ ਟਰੈਕਿੰਗ">Medicine Tracking</h4>
-                    <p data-en="Real-time pharmacy stock with home delivery" data-hi="होम डिलीवरी के साथ रीयल-टाइम फार्मेसी स्टॉक" data-pa="ਘਰ ਡਿਲੀਵਰੀ ਨਾਲ ਰੀਅਲ-ਟਾਈਮ ਫਾਰਮੇਸੀ ਸਟਾਕ">Real-time pharmacy stock with home delivery</p>
-                </div>
-                <div class="feature-item">
-                    <h4 data-en="AI Symptom Checker" data-hi="AI लक्षण जांचकर्ता" data-pa="AI ਲੱਛਣ ਜਾਂਚਕਰਤਾ">AI Symptom Checker</h4>
-                    <p data-en="Low-bandwidth optimized health assessment" data-hi="कम बैंडविड्थ अनुकूलित स्वास्थ्य मूल्यांकन" data-pa="ਘੱਟ ਬੈਂਡਵਿਡਥ ਅਨੁਕੂਲਿਤ ਸਿਹਤ ਮੁਲਾਂਕਣ">Low-bandwidth optimized health assessment</p>
-                </div>
-                <div class="feature-item">
-                    <h4 data-en="GPS Emergency" data-hi="GPS आपातकाल" data-pa="GPS ਐਮਰਜੈਂਸੀ">GPS Emergency</h4>
-                    <p data-en="Automatic location sharing for ambulance dispatch" data-hi="एम्बुलेंस भेजने के लिए स्वचालित स्थान साझाकरण" data-pa="ਐਂਬੂਲੈਂਸ ਭੇਜਣ ਲਈ ਆਟੋਮੈਟਿਕ ਸਥਾਨ ਸਾਂਝਾਕਰਨ">Automatic location sharing for ambulance dispatch</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="stats">
-            <h3 data-en="Serving Nabha Rural Community" data-hi="नाभा ग्रामीण समुदाय की सेवा" data-pa="ਨਾਭਾ ਪੇਂਡੂ ਕਮਿਉਨਿਟੀ ਦੀ ਸੇਵਾ">Serving Nabha Rural Community</h3>
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <span class="stat-number">173</span>
-                    <span class="stat-label" data-en="Villages Covered" data-hi="गांव कवर किए गए" data-pa="ਪਿੰਡਾਂ ਨੂੰ ਕਵਰ ਕੀਤਾ">Villages Covered</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">11</span>
-                    <span class="stat-label" data-en="Active Doctors" data-hi="सक्रिय डॉक्टर" data-pa="ਸਰਗਰਮ ਡਾਕਟਰ">Active Doctors</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">24/7</span>
-                    <span class="stat-label" data-en="Emergency Support" data-hi="आपातकालीन सहायता" data-pa="ਐਮਰਜੈਂਸੀ ਸਹਾਇਤਾ">Emergency Support</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">₹50</span>
-                    <span class="stat-label" data-en="Consultation Fee" data-hi="परामर्श शुल्क" data-pa="ਸਲਾਹ ਫੀਸ">Consultation Fee</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Appointment Modal -->
-    <div id="appointmentModal" class="modal">
+    <!-- Modals -->
+    <div id="appointmentModal" class="modal hidden">
         <div class="modal-content">
-            <span class="close" onclick="closeModal('appointmentModal')">&times;</span>
-            <h2 data-en="Book Appointment" data-hi="अपॉइंटमेंट बुक करें" data-pa="ਮੁਲਾਕਾਤ ਬੁੱਕ ਕਰੋ">Book Appointment</h2>
-            
-            <form id="appointmentForm">
+            <div class="modal-header">
+                <h3 data-translate="book_appointment">Book Appointment</h3>
+                <button class="close-btn" onclick="closeModal('appointmentModal')">&times;</button>
+            </div>
+            <form>
                 <div class="form-group">
-                    <label data-en="Full Name" data-hi="पूरा नाम" data-pa="ਪੂਰਾ ਨਾਮ">Full Name</label>
-                    <input type="text" id="patientName" required>
+                    <label class="form-label" data-translate="patient_name">Patient Name</label>
+                    <input type="text" class="form-input" data-translate-placeholder="enter_name" placeholder="Enter your name">
                 </div>
-                
                 <div class="form-group">
-                    <label data-en="Phone Number" data-hi="फोन नंबर" data-pa="ਫੋਨ ਨੰਬਰ">Phone Number</label>
-                    <input type="tel" id="patientPhone" required>
+                    <label class="form-label" data-translate="phone_number">Phone Number</label>
+                    <input type="tel" class="form-input" data-translate-placeholder="enter_phone" placeholder="Enter phone number">
                 </div>
-                
                 <div class="form-group">
-                    <label data-en="Village/Area" data-hi="गांव/क्षेत्र" data-pa="ਪਿੰਡ/ਇਲਾਕਾ">Village/Area</label>
-                    <input type="text" id="patientArea" required>
+                    <label class="form-label" data-translate="preferred_date">Preferred Date</label>
+                    <input type="date" class="form-input">
                 </div>
-                
                 <div class="form-group">
-                    <label data-en="Department Needed" data-hi="आवश्यक विभाग" data-pa="ਲੋੜੀਂਦਾ ਵਿਭਾਗ">Department Needed</label>
-                    <select id="department" required>
-                        <option value="" data-en="Select Department" data-hi="विभाग चुनें" data-pa="ਵਿਭਾਗ ਚੁਣੋ">Select Department</option>
-                        <option value="general" data-en="General Medicine" data-hi="सामान्य चिकित्सा" data-pa="ਆਮ ਦਵਾਈ">General Medicine</option>
-                        <option value="pediatrics" data-en="Pediatrics" data-hi="बाल चिकित्सा" data-pa="ਬਾਲ ਚਿਕਿਤਸਾ">Pediatrics</option>
-                        <option value="gynecology" data-en="Gynecology" data-hi="स्त्री रोग" data-pa="ਔਰਤਾਂ ਦੇ ਰੋਗ">Gynecology</option>
-                        <option value="orthopedics" data-en="Orthopedics" data-hi="हड्डी रोग" data-pa="ਹੱਡੀਆਂ ਦੇ ਰੋਗ">Orthopedics</option>
-                        <option value="cardiology" data-en="Cardiology" data-hi="हृदय रोग" data-pa="ਦਿਲ ਦੇ ਰੋਗ">Cardiology</option>
+                    <label class="form-label" data-translate="preferred_time">Preferred Time</label>
+                    <select class="form-select">
+                        <option data-translate="select_time">Select Time</option>
+                        <option>9:00 AM</option>
+                        <option>10:00 AM</option>
+                        <option>11:00 AM</option>
+                        <option>2:00 PM</option>
+                        <option>3:00 PM</option>
+                        <option>4:00 PM</option>
                     </select>
                 </div>
-                
                 <div class="form-group">
-                    <label data-en="Describe your symptoms" data-hi="अपने लक्षणों का वर्णन करें" data-pa="ਆਪਣੇ ਲੱਛਣਾਂ ਦਾ ਵਰਣਨ ਕਰੋ">Describe your symptoms</label>
-                    <textarea id="symptoms" rows="4" placeholder=""></textarea>
+                    <label class="form-label" data-translate="reason_visit">Reason for Visit</label>
+                    <textarea class="form-input" rows="3" data-translate-placeholder="describe_symptoms" placeholder="Describe your symptoms or reason for visit"></textarea>
                 </div>
-                
-                <div class="form-group">
-                    <label data-en="Preferred Date" data-hi="पसंदीदा तारीख" data-pa="ਪਸੰਦੀਦਾ ਤਾਰੀਖ">Preferred Date</label>
-                    <input type="date" id="appointmentDate" required>
-                </div>
-                
-                <div class="form-group">
-                    <label data-en="Preferred Time" data-hi="पसंदीदा समय" data-pa="ਪਸੰਦੀਦਾ ਸਮਾਂ">Preferred Time</label>
-                    <select id="appointmentTime" required>
-                        <option value="morning" data-en="Morning (9 AM - 12 PM)" data-hi="सुबह (9 बजे - 12 बजे)" data-pa="ਸਵੇਰ (9 ਵਜੇ - 12 ਵਜੇ)">Morning (9 AM - 12 PM)</option>
-                        <option value="afternoon" data-en="Afternoon (2 PM - 5 PM)" data-hi="दोपहर (2 बजे - 5 बजे)" data-pa="ਦੁਪਹਿਰ (2 ਵਜੇ - 5 ਵਜੇ)">Afternoon (2 PM - 5 PM)</option>
-                        <option value="evening" data-en="Evening (5 PM - 8 PM)" data-hi="शाम (5 बजे - 8 बजे)" data-pa="ਸ਼ਾਮ (5 ਵਜੇ - 8 ਵਜੇ)">Evening (5 PM - 8 PM)</option>
-                    </select>
-                </div>
-                
-                <button type="submit" class="btn btn-primary" data-en="Schedule Appointment" data-hi="अपॉइंटमेंट शेड्यूल करें" data-pa="ਮੁਲਾਕਾਤ ਨਿਯਤ ਕਰੋ">Schedule Appointment</button>
+                <button type="button" class="btn btn-primary" onclick="confirmAppointment()">
+                    <span data-translate="confirm_appointment">Confirm Appointment</span>
+                </button>
             </form>
-            
-            <div id="appointmentConfirmation" class="hidden">
-                <h3 data-en="Appointment Scheduled!" data-hi="अपॉइंटमेंट शेड्यूल हो गया!" data-pa="ਮੁਲਾਕਾਤ ਨਿਯਤ ਹੋ ਗਈ!">Appointment Scheduled!</h3>
-                <p data-en="Your telemedicine consultation is confirmed. You'll receive a call at your scheduled time. If lab tests are needed, our team will visit your location for sample collection." data-hi="आपका टेलीमेडिसिन परामर्श पुष्ट है। आपको निर्धारित समय पर कॉल आएगी। यदि लैब टेस्ट की आवश्यकता है, तो हमारी टीम नमूना संग्रह के लिए आपके स्थान पर आएगी।" data-pa="ਤੁਹਾਡਾ ਟੈਲੀਮੈਡੀਸਿਨ ਸਲਾਹ ਪੱਕਾ ਹੈ। ਤੁਹਾਨੂੰ ਨਿਯਤ ਸਮੇਂ 'ਤੇ ਕਾਲ ਆਵੇਗੀ। ਜੇ ਲੈਬ ਟੈਸਟ ਦੀ ਲੋੜ ਹੈ, ਤਾਂ ਸਾਡੀ ਟੀਮ ਨਮੂਨਾ ਇਕੱਠਾ ਕਰਨ ਲਈ ਤੁਹਾਡੇ ਸਥਾਨ 'ਤੇ ਆਵੇਗੀ।">Your telemedicine consultation is confirmed. You'll receive a call at your scheduled time. If lab tests are needed, our team will visit your location for sample collection.</p>
-                <div style="margin-top: 20px; padding: 15px; background: #d4edda; border-radius: 10px;">
-                    <strong data-en="Appointment ID: #NH2024001" data-hi="अपॉइंटमेंट आईडी: #NH2024001" data-pa="ਮੁਲਾਕਾਤ ਆਈਡੀ: #NH2024001">Appointment ID: #NH2024001</strong>
-                </div>
-            </div>
         </div>
     </div>
 
-    <!-- Emergency Modal -->
-    <div id="emergencyModal" class="modal emergency-modal">
+    <div id="stockModal" class="modal hidden">
         <div class="modal-content">
-            <span class="close" onclick="closeModal('emergencyModal')">&times;</span>
-            <h2 data-en="🚨 Emergency Support" data-hi="🚨 आपातकालीन सहायता" data-pa="🚨 ਐਮਰਜੈਂਸੀ ਸਹਾਇਤਾ">🚨 Emergency Support</h2>
-            
-            <div class="emergency-actions">
-                <button class="voice-input" onclick="startVoiceInput()">
-                    <span id="voiceIcon">🎤</span>
-                    <span data-en="Speak Your Emergency" data-hi="अपनी आपात स्थिति बोलें" data-pa="ਆਪਣੀ ਐਮਰਜੈਂਸੀ ਬੋਲੋ">Speak Your Emergency</span>
-                </button>
-                
-                <button class="btn btn-emergency" onclick="callDoctor()">
-                    <span data-en="📞 Call Doctor Now" data-hi="📞 अभी डॉक्टर को कॉल करें" data-pa="📞 ਹੁਣੇ ਡਾਕਟਰ ਨੂੰ ਕਾਲ ਕਰੋ">📞 Call Doctor Now</span>
-                </button>
-                
-                <button class="btn btn-emergency" onclick="requestAmbulance()">
-                    <span data-en="🚑 Request Ambulance" data-hi="🚑 एम्बुलेंस का अनुरोध करें" data-pa="🚑 ਐਂਬੂਲੈਂਸ ਦੀ ਬੇਨਤੀ ਕਰੋ">🚑 Request Ambulance</span>
-                </button>
+            <div class="modal-header">
+                <h3 data-translate="medicine_stock">Medicine Stock</h3>
+                <button class="close-btn" onclick="closeModal('stockModal')">&times;</button>
             </div>
-            
-            <div id="emergencyChat" class="chat-interface">
-                <div class="chat-message bot-message">
-                    <strong data-en="Emergency AI Assistant:" data-hi="आपातकालीन AI सहायक:" data-pa="ਐਮਰਜੈਂਸੀ AI ਸਹਾਇਕ:">Emergency AI Assistant:</strong>
-                    <span data-en="I'm here to help. Please describe your emergency in any language - voice or text." data-hi="मैं यहाँ मदद के लिए हूँ। कृपया किसी भी भाषा में अपनी आपात स्थिति का वर्णन करें - आवाज या पाठ।" data-pa="ਮੈਂ ਇੱਥੇ ਮਦਦ ਲਈ ਹਾਂ। ਕਿਰਪਾ ਕਰਕੇ ਕਿਸੇ ਵੀ ਭਾਸ਼ਾ ਵਿੱਚ ਆਪਣੀ ਐਮਰਜੈਂਸੀ ਦਾ ਵਰਣਨ ਕਰੋ - ਆਵਾਜ਼ ਜਾਂ ਟੈਕਸਟ।">I'm here to help. Please describe your emergency in any language - voice or text.</span>
+            <div>
+                <div class="form-group">
+                    <label class="form-label" data-translate="search_medicine">Search Medicine</label>
+                    <input type="text" class="form-input" data-translate-placeholder="medicine_name" placeholder="Enter medicine name">
                 </div>
-            </div>
-            
-            <div class="form-group">
-                <input type="text" id="emergencyInput" placeholder="Type your emergency..." data-en="Type your emergency..." data-hi="अपनी आपात स्थिति लिखें..." data-pa="ਆਪਣੀ ਐਮਰਜੈਂਸੀ ਲਿਖੋ...">
-                <button type="button" class="btn btn-emergency" onclick="sendEmergencyMessage()" style="margin-top: 10px;" data-en="Send" data-hi="भेजें" data-pa="ਭੇਜੋ">Send</button>
-            </div>
-            
-            <div id="firstAidSection" class="hidden">
-                <div class="first-aid">
-                    <h4 data-en="⚡ Immediate First Aid" data-hi="⚡ तत्काल प्राथमिक चिकित्सा" data-pa="⚡ ਤੁਰੰਤ ਪਹਿਲੀ ਸਹਾਇਤਾ">⚡ Immediate First Aid</h4>
-                    <ol class="first-aid-steps" id="firstAidSteps">
-                        <!-- Steps will be dynamically added based on emergency type -->
-                    </ol>
+                <div id="stockResults">
+                    <div style="padding: 1rem; background: var(--surface); border-radius: 0.5rem; margin-bottom: 0.5rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span>Paracetamol 500mg</span>
+                            <span style="color: var(--secondary-color); font-weight: 600;" data-translate="available">Available</span>
+                        </div>
+                        <p style="font-size: 0.875rem; color: var(--text-secondary);">₹12 per strip</p>
+                    </div>
+                    <div style="padding: 1rem; background: var(--surface); border-radius: 0.5rem; margin-bottom: 0.5rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span>Amoxicillin 250mg</span>
+                            <span style="color: var(--accent-color); font-weight: 600;" data-translate="low_stock">Low Stock</span>
+                        </div>
+                        <p style="font-size: 0.875rem; color: var(--text-secondary);">₹45 per strip</p>
+                    </div>
+                    <div style="padding: 1rem; background: var(--surface); border-radius: 0.5rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span>Insulin Injection</span>
+                            <span style="color: var(--danger-color); font-weight: 600;" data-translate="out_of_stock">Out of Stock</span>
+                        </div>
+                        <p style="font-size: 0.875rem; color: var(--text-secondary);">Expected: Tomorrow</p>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Chat Modal -->
-    <div id="chatModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('chatModal')">&times;</span>
-            <h2 data-en="Chat with Doctor" data-hi="डॉक्टर से चैट करें" data-pa="ਡਾਕਟਰ ਨਾਲ ਗੱਲਬਾਤ ਕਰੋ">Chat with Doctor</h2>
-            
-            <div class="chat-interface" id="doctorChat">
-                <div class="chat-message bot-message">
-                    <strong data-en="Dr. Sharma:" data-hi="डॉ. शर्मा:" data-pa="ਡਾ. ਸ਼ਰਮਾ:">Dr. Sharma:</strong>
-                    <span data-en="Hello! I'm here to help with your health concerns. Please describe your symptoms or condition." data-hi="नमस्ते! मैं आपकी स्वास्थ्य चिंताओं में मदद के लिए यहाँ हूँ। कृपया अपने लक्षणों या स्थिति का वर्णन करें।" data-pa="ਸਤ ਸ੍ਰੀ ਅਕਾਲ! ਮੈਂ ਤੁਹਾਡੀਆਂ ਸਿਹਤ ਸਮੱਸਿਆਵਾਂ ਵਿੱਚ ਮਦਦ ਲਈ ਇੱਥੇ ਹਾਂ। ਕਿਰਪਾ ਕਰਕੇ ਆਪਣੇ ਲੱਛਣਾਂ ਜਾਂ ਸਥਿਤੀ ਦਾ ਵਰਣਨ ਕਰੋ।">Hello! I'm here to help with your health concerns. Please describe your symptoms or condition.</span>
-                </div>
-            </div>
-            
-            <div class="form-group">
-                <input type="text" id="chatInput" placeholder="Type your message..." data-en="Type your message..." data-hi="अपना संदेश लिखें..." data-pa="ਆਪਣਾ ਸੁਨੇਹਾ ਲਿਖੋ...">
-                <button type="button" class="btn btn-secondary" onclick="sendChatMessage()" style="margin-top: 10px;" data-en="Send" data-hi="भेजें" data-pa="ਭੇਜੋ">Send</button>
-            </div>
-            
-            <div id="pharmacyResults" class="hidden">
-                <h3 data-en="💊 Nearby Pharmacies" data-hi="💊 नजदीकी फार्मेसियां" data-pa="💊 ਨੇੜਲੀਆਂ ਫਾਰਮੇਸੀਆਂ">💊 Nearby Pharmacies</h3>
-                <div id="pharmacyList"></div>
             </div>
         </div>
     </div>
 
     <script>
-        let currentLanguage = 'en';
-        let isRecording = false;
-        let isDarkMode = false;
-
-        // Dark Mode Toggle
-        function toggleTheme() {
-            isDarkMode = !isDarkMode;
-            const body = document.body;
-            const themeToggle = document.querySelector('.theme-toggle');
-            
-            if (isDarkMode) {
-                body.setAttribute('data-theme', 'dark');
-                themeToggle.innerHTML = '☀️';
-                themeToggle.title = 'Toggle Light Mode';
-                localStorage.setItem('theme', 'dark');
-            } else {
-                body.removeAttribute('data-theme');
-                themeToggle.innerHTML = '🌙';
-                themeToggle.title = 'Toggle Dark Mode';
-                localStorage.setItem('theme', 'light');
+        // Language translations
+        const translations = {
+            en: {
+                emergency: "Emergency",
+                hero_title: "Your Health, Our Priority",
+                hero_subtitle: "Complete healthcare solutions at your fingertips",
+                find_doctor: "Find a Doctor",
+                doctor_consultation: "Doctor Consultation",
+                doctor_consultation_desc: "Find nearby doctors, check availability, and book appointments",
+                pharmacy_finder: "Pharmacy Finder",
+                pharmacy_finder_desc: "Locate nearby pharmacies with medicine availability",
+                ai_symptom_checker: "AI Symptom Checker",
+                ai_symptom_checker_desc: "Get instant health advice from our AI assistant",
+                explore: "Explore",
+                nearby_doctors: "Nearby Doctors",
+                cardiologist: "Cardiologist",
+                general_physician: "General Physician",
+                pediatrician: "Pediatrician",
+                available: "Available",
+                busy: "Busy",
+                book_appointment: "Book Appointment",
+                emergency_call: "Emergency Call",
+                doctor_locations: "Doctor Locations",
+                interactive_map: "Interactive Map Showing Nearby Doctors",
+                nearby_pharmacies: "Nearby Pharmacies",
+                open: "Open",
+                home_delivery: "Home Delivery",
+                owner: "Owner",
+                medicines_available: "Most medicines available",
+                limited_stock: "Limited stock available",
+                check_stock: "Check Stock",
+                order_online: "Order Online",
+                call: "Call",
+                pharmacy_locations: "Pharmacy Locations",
+                pharmacy_map: "Interactive Map Showing Nearby Pharmacies",
+                ai_health_assistant: "AI Health Assistant",
+                chatbot_greeting: "Hello! I'm your AI health assistant. Please describe your symptoms, and I'll provide initial guidance. Remember, this is not a substitute for professional medical advice.",
+                type_symptoms: "Describe your symptoms...",
+                ai_disclaimer: "AI responses are for informational purposes only. Please consult a healthcare professional for proper diagnosis and treatment.",
+                emergency_services: "Emergency Services",
+                call_ambulance: "Call Ambulance",
+                ambulance_desc: "Emergency medical transport",
+                call_now: "Call Now",
+                trained_personnel: "Village Trained Personnel",
+                personnel_desc: "Local healthcare worker nearby",
+                locate: "Locate",
+                emergency_hotline: "Emergency Hotline",
+                hotline_desc: "24/7 medical helpline",
+                emergency_contacts: "Emergency Contacts",
+                trained_nurse: "Trained Nurse",
+                first_aid_expert: "First Aid Expert",
+                contact: "Contact",
+                emergency_map: "Emergency Personnel Map",
+                personnel_map: "Map showing locations of trained personnel and emergency services",
+                video_consultation: "Video Consultation",
+                connecting: "Connecting to video call...",
+                call_duration: "Call Duration",
+                demo_call: "This is a demo video call interface. In real implementation, this would connect to the doctor.",
+                patient_name: "Patient Name",
+                enter_name: "Enter your name",
+                phone_number: "Phone Number",
+                enter_phone: "Enter phone number",
+                preferred_date: "Preferred Date",
+                preferred_time: "Preferred Time",
+                select_time: "Select Time",
+                reason_visit: "Reason for Visit",
+                describe_symptoms: "Describe your symptoms or reason for visit",
+                confirm_appointment: "Confirm Appointment",
+                medicine_stock: "Medicine Stock",
+                search_medicine: "Search Medicine",
+                medicine_name: "Enter medicine name",
+                low_stock: "Low Stock",
+                out_of_stock: "Out of Stock"
+            },
+            hi: {
+                emergency: "आपातकाल",
+                hero_title: "आपका स्वास्थ्य, हमारी प्राथमिकता",
+                hero_subtitle: "आपकी उंगलियों पर संपूर्ण स्वास्थ्य सेवा समाधान",
+                find_doctor: "डॉक्टर खोजें",
+                doctor_consultation: "डॉक्टर परामर्श",
+                doctor_consultation_desc: "नजदीकी डॉक्टर खोजें, उपलब्धता जांचें और अपॉइंटमेंट बुक करें",
+                pharmacy_finder: "फार्मेसी खोजक",
+                pharmacy_finder_desc: "दवा उपलब्धता के साथ नजदीकी फार्मेसी खोजें",
+                ai_symptom_checker: "AI लक्षण जांचकर्ता",
+                ai_symptom_checker_desc: "हमारे AI सहायक से तुरंत स्वास्थ्य सलाह प्राप्त करें",
+                explore: "खोजें",
+                nearby_doctors: "नजदीकी डॉक्टर",
+                cardiologist: "हृदय रोग विशेषज्ञ",
+                general_physician: "सामान्य चिकित्सक",
+                pediatrician: "बाल रोग विशेषज्ञ",
+                available: "उपलब्ध",
+                busy: "व्यस्त",
+                book_appointment: "अपॉइंटमेंट बुक करें",
+                emergency_call: "आपातकालीन कॉल",
+                doctor_locations: "डॉक्टर स्थान",
+                interactive_map: "नजदीकी डॉक्टरों को दिखाने वाला इंटरेक्टिव मैप",
+                nearby_pharmacies: "नजदीकी फार्मेसी",
+                open: "खुला",
+                home_delivery: "होम डिलीवरी",
+                owner: "मालिक",
+                medicines_available: "अधिकांश दवाएं उपलब्ध",
+                limited_stock: "सीमित स्टॉक उपलब्ध",
+                check_stock: "स्टॉक जांचें",
+                order_online: "ऑनलाइन ऑर्डर करें",
+                call: "कॉल करें",
+                pharmacy_locations: "फार्मेसी स्थान",
+                pharmacy_map: "नजदीकी फार्मेसी दिखाने वाला इंटरेक्टिव मैप",
+                ai_health_assistant: "AI स्वास्थ्य सहायक",
+                chatbot_greeting: "नमस्ते! मैं आपका AI स्वास्थ्य सहायक हूं। कृपया अपने लक्षणों का वर्णन करें, और मैं प्रारंभिक मार्गदर्शन प्रदान करूंगा। याद रखें, यह पेशेवर चिकित्सा सलाह का विकल्प नहीं है।",
+                type_symptoms: "अपने लक्षणों का वर्णन करें...",
+                ai_disclaimer: "AI प्रतिक्रियाएं केवल सूचनात्मक उद्देश्यों के लिए हैं। उचित निदान और उपचार के लिए कृपया स्वास्थ्य पेशेवर से परामर्श लें।",
+                emergency_services: "आपातकालीन सेवाएं",
+                call_ambulance: "एम्बुलेंस कॉल करें",
+                ambulance_desc: "आपातकालीन चिकित्सा परिवहन",
+                call_now: "अभी कॉल करें",
+                trained_personnel: "गांव में प्रशिक्षित कर्मचारी",
+                personnel_desc: "नजदीकी स्थानीय स्वास्थ्यकर्मी",
+                locate: "खोजें",
+                emergency_hotline: "आपातकालीन हॉटलाइन",
+                hotline_desc: "24/7 चिकित्सा हेल्पलाइन",
+                emergency_contacts: "आपातकालीन संपर्क",
+                trained_nurse: "प्रशिक्षित नर्स",
+                first_aid_expert: "प्राथमिक चिकित्सा विशेषज्ञ",
+                contact: "संपर्क करें",
+                emergency_map: "आपातकालीन कर्मचारी मैप",
+                personnel_map: "प्रशिक्षित कर्मचारियों और आपातकालीन सेवाओं के स्थान दिखाने वाला मैप",
+                video_consultation: "वीडियो परामर्श",
+                connecting: "वीडियो कॉल से जुड़ रहे हैं...",
+                call_duration: "कॉल अवधि",
+                demo_call: "यह एक डेमो वीडियो कॉल इंटरफ़ेस है। वास्तविक कार्यान्वयन में, यह डॉक्टर से जुड़ेगा।",
+                patient_name: "मरीज़ का नाम",
+                enter_name: "अपना नाम दर्ज करें",
+                phone_number: "फ़ोन नंबर",
+                enter_phone: "फ़ोन नंबर दर्ज करें",
+                preferred_date: "पसंदीदा तारीख",
+                preferred_time: "पसंदीदा समय",
+                select_time: "समय चुनें",
+                reason_visit: "मुलाकात का कारण",
+                describe_symptoms: "अपने लक्षणों या मुलाकात के कारण का वर्णन करें",
+                confirm_appointment: "अपॉइंटमेंट की पुष्टि करें",
+                medicine_stock: "दवा स्टॉक",
+                search_medicine: "दवा खोजें",
+                medicine_name: "दवा का नाम दर्ज करें",
+                low_stock: "कम स्टॉक",
+                out_of_stock: "स्टॉक में नहीं"
+            },
+            pa: {
+                emergency: "ਐਮਰਜੈਂਸੀ",
+                hero_title: "ਤੁਹਾਡੀ ਸਿਹਤ, ਸਾਡੀ ਤਰਜੀਹ",
+                hero_subtitle: "ਤੁਹਾਡੀ ਉਂਗਲਾਂ 'ਤੇ ਸੰਪੂਰਨ ਸਿਹਤ ਸੇਵਾ ਹੱਲ",
+                find_doctor: "ਡਾਕਟਰ ਲੱਭੋ",
+                doctor_consultation: "ਡਾਕਟਰ ਸਲਾਹ",
+                doctor_consultation_desc: "ਨੇੜਲੇ ਡਾਕਟਰ ਲੱਭੋ, ਉਪਲਬਧਤਾ ਜਾਂਚੋ ਅਤੇ ਅਪਾਇਂਟਮੈਂਟ ਬੁੱਕ ਕਰੋ",
+                pharmacy_finder: "ਫਾਰਮੇਸੀ ਖੋਜੀ",
+                pharmacy_finder_desc: "ਦਵਾਈ ਦੀ ਉਪਲਬਧਤਾ ਨਾਲ ਨੇੜਲੀ ਫਾਰਮੇਸੀ ਲੱਭੋ",
+                ai_symptom_checker: "AI ਲੱਛਣ ਜਾਂਚਕਰਤਾ",
+                ai_symptom_checker_desc: "ਸਾਡੇ AI ਸਹਾਇਕ ਤੋਂ ਤੁਰੰਤ ਸਿਹਤ ਸਲਾਹ ਲਓ",
+                explore: "ਖੋਜੋ",
+                nearby_doctors: "ਨੇੜਲੇ ਡਾਕਟਰ",
+                cardiologist: "ਦਿਲ ਦੀ ਬਿਮਾਰੀ ਦੇ ਮਾਹਿਰ",
+                general_physician: "ਆਮ ਡਾਕਟਰ",
+                pediatrician: "ਬਾਲ ਰੋਗ ਮਾਹਿਰ",
+                available: "ਉਪਲਬਧ",
+                busy: "ਰੁੱਝਿਆ",
+                book_appointment: "ਅਪਾਇਂਟਮੈਂਟ ਬੁੱਕ ਕਰੋ",
+                emergency_call: "ਐਮਰਜੈਂਸੀ ਕਾਲ",
+                doctor_locations: "ਡਾਕਟਰ ਦੇ ਸਥਾਨ",
+                interactive_map: "ਨੇੜਲੇ ਡਾਕਟਰਾਂ ਨੂੰ ਦਿਖਾਉਣ ਵਾਲਾ ਇੰਟਰਐਕਟਿਵ ਮੈਪ",
+                nearby_pharmacies: "ਨੇੜਲੀਆਂ ਫਾਰਮੇਸੀਆਂ",
+                open: "ਖੁੱਲ੍ਹਾ",
+                home_delivery: "ਘਰ ਪਹੁੰਚਾਨ",
+                owner: "ਮਾਲਕ",
+                medicines_available: "ਬਹੁਤੀਆਂ ਦਵਾਈਆਂ ਉਪਲਬਧ",
+                limited_stock: "ਸੀਮਤ ਸਟਾਕ ਉਪਲਬਧ",
+                check_stock: "ਸਟਾਕ ਜਾਂਚੋ",
+                order_online: "ਔਨਲਾਈਨ ਆਰਡਰ ਕਰੋ",
+                call: "ਕਾਲ ਕਰੋ",
+                pharmacy_locations: "ਫਾਰਮੇਸੀ ਸਥਾਨ",
+                pharmacy_map: "ਨੇੜਲੀਆਂ ਫਾਰਮੇਸੀਆਂ ਦਿਖਾਉਣ ਵਾਲਾ ਇੰਟਰਐਕਟਿਵ ਮੈਪ",
+                ai_health_assistant: "AI ਸਿਹਤ ਸਹਾਇਕ",
+                chatbot_greeting: "ਸਤ ਸ੍ਰੀ ਅਕਾਲ! ਮੈਂ ਤੁਹਾਡਾ AI ਸਿਹਤ ਸਹਾਇਕ ਹਾਂ। ਕਿਰਪਾ ਕਰਕੇ ਆਪਣੇ ਲੱਛਣਾਂ ਦਾ ਵਰਣਨ ਕਰੋ, ਅਤੇ ਮੈਂ ਸ਼ੁਰੂਆਤੀ ਮਾਰਗਦਰਸ਼ਨ ਪ੍ਰਦਾਨ ਕਰਾਂਗਾ। ਯਾਦ ਰੱਖੋ, ਇਹ ਪੇਸ਼ੇਵਰ ਡਾਕਟਰੀ ਸਲਾਹ ਦਾ ਵਿਕਲਪ ਨਹੀਂ ਹੈ।",
+                type_symptoms: "ਆਪਣੇ ਲੱਛਣਾਂ ਦਾ ਵਰਣਨ ਕਰੋ...",
+                ai_disclaimer: "AI ਜਵਾਬ ਸਿਰਫ਼ ਜਾਣਕਾਰੀ ਦੇ ਉਦੇਸ਼ਾਂ ਲਈ ਹਨ। ਸਹੀ ਨਿਦਾਨ ਅਤੇ ਇਲਾਜ ਲਈ ਕਿਰਪਾ ਕਰਕੇ ਸਿਹਤ ਪੇਸ਼ੇਵਰ ਨਾਲ ਸਲਾਹ ਕਰੋ।",
+                emergency_services: "ਐਮਰਜੈਂਸੀ ਸੇਵਾਵਾਂ",
+                call_ambulance: "ਐਂਬੂਲੈਂਸ ਕਾਲ ਕਰੋ",
+                ambulance_desc: "ਐਮਰਜੈਂਸੀ ਡਾਕਟਰੀ ਆਵਾਜਾਈ",
+                call_now: "ਹੁਣੇ ਕਾਲ ਕਰੋ",
+                trained_personnel: "ਪਿੰਡ ਦੇ ਸਿਖਿਅਤ ਕਰਮਚਾਰੀ",
+                personnel_desc: "ਨੇੜਲੇ ਸਥਾਨਕ ਸਿਹਤ ਕਰਮਚਾਰੀ",
+                locate: "ਲੱਭੋ",
+                emergency_hotline: "ਐਮਰਜੈਂਸੀ ਹਾਟਲਾਈਨ",
+                hotline_desc: "24/7 ਡਾਕਟਰੀ ਹੈਲਪਲਾਈਨ",
+                emergency_contacts: "ਐਮਰਜੈਂਸੀ ਸੰਪਰਕ",
+                trained_nurse: "ਸਿਖਿਅਤ ਨਰਸ",
+                first_aid_expert: "ਪ੍ਰਾਥਮਿਕ ਸਹਾਇਤਾ ਮਾਹਿਰ",
+                contact: "ਸੰਪਰਕ ਕਰੋ",
+                emergency_map: "ਐਮਰਜੈਂਸੀ ਕਰਮਚਾਰੀ ਮੈਪ",
+                personnel_map: "ਸਿਖਿਅਤ ਕਰਮਚਾਰੀਆਂ ਅਤੇ ਐਮਰਜੈਂਸੀ ਸੇਵਾਵਾਂ ਦੇ ਸਥਾਨ ਦਿਖਾਉਣ ਵਾਲਾ ਮੈਪ",
+                video_consultation: "ਵੀਡੀਓ ਸਲਾਹ",
+                connecting: "ਵੀਡੀਓ ਕਾਲ ਨਾਲ ਜੁੜ ਰਹੇ ਹਾਂ...",
+                call_duration: "ਕਾਲ ਦੀ ਮਿਆਦ",
+                demo_call: "ਇਹ ਇੱਕ ਡੈਮੋ ਵੀਡੀਓ ਕਾਲ ਇੰਟਰਫੇਸ ਹੈ। ਅਸਲ ਵਿੱਚ, ਇਹ ਡਾਕਟਰ ਨਾਲ ਜੁੜੇਗਾ।",
+                patient_name: "ਮਰੀਜ਼ ਦਾ ਨਾਮ",
+                enter_name: "ਆਪਣਾ ਨਾਮ ਦਰਜ ਕਰੋ",
+                phone_number: "ਫ਼ੋਨ ਨੰਬਰ",
+                enter_phone: "ਫ਼ੋਨ ਨੰਬਰ ਦਰਜ ਕਰੋ",
+                preferred_date: "ਤਰਜੀਹੀ ਤਾਰੀਖ",
+                preferred_time: "ਤਰਜੀਹੀ ਸਮਾਂ",
+                select_time: "ਸਮਾਂ ਚੁਣੋ",
+                reason_visit: "ਮੁਲਾਕਾਤ ਦਾ ਕਾਰਨ",
+                describe_symptoms: "ਆਪਣੇ ਲੱਛਣਾਂ ਜਾਂ ਮੁਲਾਕਾਤ ਦੇ ਕਾਰਨ ਦਾ ਵਰਣਨ ਕਰੋ",
+                confirm_appointment: "ਅਪਾਇਂਟਮੈਂਟ ਦੀ ਪੁਸ਼ਟੀ ਕਰੋ",
+                medicine_stock: "ਦਵਾਈ ਸਟਾਕ",
+                search_medicine: "ਦਵਾਈ ਖੋਜੋ",
+                medicine_name: "ਦਵਾਈ ਦਾ ਨਾਮ ਦਰਜ ਕਰੋ",
+                low_stock: "ਘੱਟ ਸਟਾਕ",
+                out_of_stock: "ਸਟਾਕ ਵਿੱਚ ਨਹੀਂ"
             }
-        }
-
-        // Load saved theme
-        function loadTheme() {
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'dark') {
-                isDarkMode = true;
-                document.body.setAttribute('data-theme', 'dark');
-                document.querySelector('.theme-toggle').innerHTML = '☀️';
-                document.querySelector('.theme-toggle').title = 'Toggle Light Mode';
-            }
-        }
-
-        function changeLanguage(lang) {
-            currentLanguage = lang;
-            
-            // Update active button
-            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            
-            // Update all text elements with data attributes for the selected language
-            document.querySelectorAll(`[data-${lang}]`).forEach(element => {
-                element.textContent = element.getAttribute(`data-${lang}`);
-            });
-            
-            // Update placeholders
-            updatePlaceholders(lang);
-        }
-
-        let emergencySteps = {
-            chest_pain: [
-                { en: "Have the person sit down and rest", hi: "व्यक्ति को बैठाएं और आराम कराएं", pa: "ਵਿਅਕਤੀ ਨੂੰ ਬਿਠਾਓ ਅਤੇ ਆਰਾਮ ਕਰਾਓ" },
-                { en: "Loosen tight clothing around chest/neck", hi: "छाती/गर्दन के आसपास तंग कपड़े ढीले करें", pa: "ਛਾਤੀ/ਗਰਦਨ ਦੇ ਆਲੇ-ਦੁਆਲੇ ਤੰਗ ਕੱਪੜੇ ਢਿੱਲੇ ਕਰੋ" },
-                { en: "Give aspirin if available and not allergic", hi: "यदि उपलब्ध हो और एलर्जी न हो तो एस्पिरिन दें", pa: "ਜੇ ਉਪਲਬਧ ਹੈ ਅਤੇ ਐਲਰਜੀ ਨਹੀਂ ਤਾਂ ਐਸਪਰਿਨ ਦਿਓ" },
-                { en: "Call doctor immediately", hi: "तुरंत डॉक्टर को कॉल करें", pa: "ਤੁਰੰਤ ਡਾਕਟਰ ਨੂੰ ਕਾਲ ਕਰੋ" }
-            ],
-            breathing: [
-                { en: "Help person sit upright", hi: "व्यक्ति को सीधा बैठने में मदद करें", pa: "ਵਿਅਕਤੀ ਨੂੰ ਸਿੱਧਾ ਬੈਠਣ ਵਿੱਚ ਮਦਦ ਕਰੋ" },
-                { en: "Ensure airway is clear", hi: "सुनिश्चित करें कि वायुमार्ग साफ है", pa: "ਯਕੀਨੀ ਬਣਾਓ ਕਿ ਸਾਹ ਦਾ ਰਸਤਾ ਸਾਫ਼ ਹੈ" },
-                { en: "Encourage slow, deep breathing", hi: "धीमी, गहरी सांस लेने के लिए प्रोत्साहित करें", pa: "ਹੌਲੀ, ਡੂੰਘੇ ਸਾਹ ਲੈਣ ਲਈ ਉਤਸ਼ਾਹਿਤ ਕਰੋ" },
-                { en: "Stay calm and call for help", hi: "शांत रहें और मदद के लिए कॉल करें", pa: "ਸ਼ਾਂਤ ਰਹੋ ਅਤੇ ਮਦਦ ਲਈ ਕਾਲ ਕਰੋ" }
-            ],
-            bleeding: [
-                { en: "Apply direct pressure to wound", hi: "घाव पर सीधा दबाव डालें", pa: "ਜ਼ਖ਼ਮ 'ਤੇ ਸਿੱਧਾ ਦਬਾਅ ਪਾਓ" },
-                { en: "Elevate injured area if possible", hi: "यदि संभव हो तो घायल क्षेत्र को ऊपर उठाएं", pa: "ਜੇ ਸੰਭਵ ਹੋਵੇ ਤਾਂ ਜ਼ਖ਼ਮੀ ਹਿੱਸੇ ਨੂੰ ਉੱਪਰ ਚੁੱਕੋ" },
-                { en: "Use clean cloth or bandage", hi: "साफ कपड़ा या पट्टी का उपयोग करें", pa: "ਸਾਫ਼ ਕੱਪੜਾ ਜਾਂ ਪੱਟੀ ਦੀ ਵਰਤੋਂ ਕਰੋ" },
-                { en: "Do not remove embedded objects", hi: "धंसी हुई वस्तुओं को न हटाएं", pa: "ਧੱਸੀਆਂ ਚੀਜ਼ਾਂ ਨੂੰ ਨਾ ਹਟਾਓ" }
-            ]
         };
 
-        let pharmacies = [
-            {
-                name: "Nabha Medical Store",
-                address: "Main Market, Nabha",
-                phone: "+91-9876543210",
-                distance: "0.5 km",
-                medicines: { paracetamol: "available", insulin: "limited", antibiotics: "available" }
-            },
-            {
-                name: "Care Pharmacy",
-                address: "Civil Hospital Road, Nabha",
-                phone: "+91-9876543211",
-                distance: "1.2 km",
-                medicines: { paracetamol: "available", insulin: "available", antibiotics: "out-of-stock" }
-            },
-            {
-                name: "Health Plus Medical",
-                address: "Bus Stand, Nabha",
-                phone: "+91-9876543212",
-                distance: "2.1 km",
-                medicines: { paracetamol: "available", insulin: "out-of-stock", antibiotics: "limited" }
-            }
-        ];
+        let currentLang = 'en';
+        let callStartTime = null;
+        let callTimer = null;
 
-        function changeLanguage(lang) {
-            currentLanguage = lang;
-            
-            // Update active button
-            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            
-            // Update all text elements
-            document.querySelectorAll('[data-' + lang + ']').forEach(element => {
-                element.textContent = element.getAttribute('data-' + lang);
-            });
-            
-            // Update placeholders
-            updatePlaceholders(lang);
-        }
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeApp();
+        });
 
-        function updatePlaceholders(lang) {
-            const placeholders = {
-                en: {
-                    emergencyInput: "Type your emergency...",
-                    chatInput: "Type your message...",
-                    symptoms: "Describe your symptoms, how long you've had them, and any other relevant information..."
-                },
-                hi: {
-                    emergencyInput: "अपनी आपात स्थिति लिखें...",
-                    chatInput: "अपना संदेश लिखें...",
-                    symptoms: "अपने लक्षणों का वर्णन करें, आपको कितने समय से हैं, और कोई अन्य प्रासंगिक जानकारी..."
-                },
-                pa: {
-                    emergencyInput: "ਆਪਣੀ ਐਮਰਜੈਂਸੀ ਲਿਖੋ...",
-                    chatInput: "ਆਪਣਾ ਸੁਨੇਹਾ ਲਿਖੋ...",
-                    symptoms: "ਆਪਣੇ ਲੱਛਣਾਂ ਦਾ ਵਰਣਨ ਕਰੋ, ਤੁਹਾਨੂੰ ਕਿੰਨੇ ਸਮੇਂ ਤੋਂ ਹਨ, ਅਤੇ ਕੋਈ ਹੋਰ ਸੰਬੰਧਿਤ ਜਾਣਕਾਰੀ..."
+        function initializeApp() {
+            // Set up event listeners
+            document.getElementById('languageSelect').addEventListener('change', changeLanguage);
+            document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+            document.getElementById('chatInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
                 }
-            };
+            });
             
-            if (placeholders[lang]) {
-                document.getElementById('emergencyInput').placeholder = placeholders[lang].emergencyInput;
-                document.getElementById('chatInput').placeholder = placeholders[lang].chatInput;
-                document.getElementById('symptoms').placeholder = placeholders[lang].symptoms;
-            }
+            // Initialize with default language
+            updateLanguage();
         }
 
-        function openModal(modalId) {
-            document.getElementById(modalId).style.display = 'block';
-            
-            // Set minimum date for appointments to today
-            if (modalId === 'appointmentModal') {
-                const today = new Date().toISOString().split('T')[0];
-                document.getElementById('appointmentDate').min = today;
-            }
+        // Language functions
+        function changeLanguage() {
+            const select = document.getElementById('languageSelect');
+            currentLang = select.value;
+            updateLanguage();
         }
 
-        function closeModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
-        }
+        function updateLanguage() {
+            const elements = document.querySelectorAll('[data-translate]');
+            elements.forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[currentLang] && translations[currentLang][key]) {
+                    element.textContent = translations[currentLang][key];
+                }
+            });
 
-        function startVoiceInput() {
-            const button = document.querySelector('.voice-input');
-            const icon = document.getElementById('voiceIcon');
-            
-            if (!isRecording) {
-                isRecording = true;
-                button.classList.add('recording');
-                icon.textContent = '⏹️';
-                
-                // Simulate voice recognition
-                setTimeout(() => {
-                    addEmergencyMessage("🔄 Connecting you with Dr. Patel... Please stay on the line.", 'bot');
-                    
-                    setTimeout(() => {
-                        addEmergencyMessage("📞 Dr. Patel is now on call. Ambulance dispatched to your location. ETA: 12 minutes.", 'bot');
-                        showLocationSharing();
-                    }, 2000);
-                }, 3000);
-                // some errors
-            };
-             1000;
-        }
-
-        function showFirstAid(type) {
-            const firstAidSection = document.getElementById('firstAidSection');
-            const stepsContainer = document.getElementById('firstAidSteps');
-            
-            firstAidSection.classList.remove('hidden');
-            stepsContainer.innerHTML = '';
-            
-            const steps = emergencySteps[type] || emergencySteps.chest_pain;
-            steps.forEach(step => {
-                const li = document.createElement('li');
-                li.textContent = step[currentLanguage];
-                stepsContainer.appendChild(li);
+            // Update placeholders
+            const placeholderElements = document.querySelectorAll('[data-translate-placeholder]');
+            placeholderElements.forEach(element => {
+                const key = element.getAttribute('data-translate-placeholder');
+                if (translations[currentLang] && translations[currentLang][key]) {
+                    element.placeholder = translations[currentLang][key];
+                }
             });
         }
 
-        function showLocationSharing() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    (position) => {
-                        const lat = position.coords.latitude.toFixed(6);
-                        const lng = position.coords.longitude.toFixed(6);
-                        addEmergencyMessage(`📍 Location shared: ${lat}, ${lng}. Ambulance tracking your location.`, 'bot');
-                    },
-                    () => {
-                        addEmergencyMessage("📍 Please share your location manually for ambulance dispatch.", 'bot');
-                    }
-                );
-            }
-        }
-
-        function callDoctor() {
-            addEmergencyMessage("📞 Calling emergency doctor... Dr. Patel will be with you shortly.", 'bot');
+        // Theme functions
+        function toggleTheme() {
+            const body = document.body;
+            const themeToggle = document.getElementById('themeToggle');
             
-            setTimeout(() => {
-                addEmergencyMessage("👨‍⚕️ Dr. Patel: Hello, I'm here to help. Can you describe what's happening?", 'bot');
-            }, 2000);
-        }
-
-        function requestAmbulance() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    (position) => {
-                        addEmergencyMessage("🚑 Ambulance requested! Sharing your location...", 'bot');
-                        setTimeout(() => {
-                            addEmergencyMessage("✅ Ambulance dispatched to your location. ETA: 15 minutes. Stay calm.", 'bot');
-                        }, 1500);
-                    },
-                    () => {
-                        addEmergencyMessage("🚑 Ambulance requested! Please provide your address for dispatch.", 'bot');
-                    }
-                );
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.setAttribute('data-theme', 'light');
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
             }
         }
 
-        function sendChatMessage() {
+        // Navigation functions
+        function showSection(sectionName) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.add('hidden');
+            });
+            
+            // Show selected section
+            const targetSection = document.getElementById(sectionName + 'Section');
+            if (targetSection) {
+                targetSection.classList.remove('hidden');
+                targetSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function showEmergency() {
+            showSection('emergency');
+        }
+
+        // Doctor functions
+        function bookAppointment(doctorName) {
+            document.getElementById('appointmentModal').classList.remove('hidden');
+        }
+
+        function callDoctor(doctorName) {
+            alert(`${getTranslation('calling')} ${doctorName}...`);
+        }
+
+        function videoCall(doctorName) {
+            document.getElementById('doctorName').textContent = doctorName;
+            showSection('videoCall');
+            startCall();
+        }
+
+        // Video call functions
+        function startCall() {
+            callStartTime = Date.now();
+            callTimer = setInterval(updateCallTimer, 1000);
+        }
+
+        function updateCallTimer() {
+            if (callStartTime) {
+                const elapsed = Date.now() - callStartTime;
+                const minutes = Math.floor(elapsed / 60000);
+                const seconds = Math.floor((elapsed % 60000) / 1000);
+                document.getElementById('callTimer').textContent = 
+                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }
+        }
+
+        function toggleMute() {
+            const btn = event.target.closest('.video-btn');
+            const icon = btn.querySelector('i');
+            if (icon.classList.contains('fa-microphone')) {
+                icon.classList.replace('fa-microphone', 'fa-microphone-slash');
+                btn.style.background = '#ef4444';
+            } else {
+                icon.classList.replace('fa-microphone-slash', 'fa-microphone');
+                btn.style.background = '#f59e0b';
+            }
+        }
+
+        function toggleVideo() {
+            const btn = event.target.closest('.video-btn');
+            const icon = btn.querySelector('i');
+            if (icon.classList.contains('fa-video')) {
+                icon.classList.replace('fa-video', 'fa-video-slash');
+                btn.style.background = '#ef4444';
+            } else {
+                icon.classList.replace('fa-video-slash', 'fa-video');
+                btn.style.background = '#10b981';
+            }
+        }
+
+        function endCall() {
+            if (callTimer) {
+                clearInterval(callTimer);
+                callTimer = null;
+                callStartTime = null;
+            }
+            alert(getTranslation('call_ended') || 'Call ended');
+            // Hide video call section and show doctors section
+            showSection('doctors');
+        }
+
+        // Pharmacy functions
+        function checkMedicineStock(pharmacyName) {
+            document.getElementById('stockModal').classList.remove('hidden');
+        }
+
+        function orderMedicine(pharmacyName) {
+            alert(`${getTranslation('ordering_from')} ${pharmacyName}...`);
+        }
+
+        function callPharmacy(phoneNumber) {
+            alert(`${getTranslation('calling')} ${phoneNumber}...`);
+        }
+
+        // Emergency functions
+        function callAmbulance() {
+            alert(getTranslation('calling_ambulance') || 'Calling ambulance... Emergency services will arrive shortly.');
+        }
+
+        function findTrainedPersonnel() {
+            alert(getTranslation('locating_personnel') || 'Locating trained personnel in your area...');
+        }
+
+        function callEmergencyHotline() {
+            alert(getTranslation('calling_hotline') || 'Connecting to 24/7 emergency hotline...');
+        }
+
+        function emergencyCall() {
+            alert(getTranslation('emergency_connecting') || 'Connecting to emergency services...');
+        }
+
+        function contactPersonnel(phone, name) {
+            alert(`${getTranslation('contacting')} ${name} - ${phone}`);
+        }
+
+        // Chat functions
+        function sendMessage() {
             const input = document.getElementById('chatInput');
             const message = input.value.trim();
             
-            if (message) {
-                addChatMessage(message, 'user');
-                handleDoctorResponse(message);
-                input.value = '';
-            }
+            if (!message) return;
+            
+            // Add user message
+            addChatMessage(message, 'user');
+            input.value = '';
+            
+            // Simulate AI response
+            setTimeout(() => {
+                const response = generateAIResponse(message);
+                addChatMessage(response, 'bot');
+            }, 1000);
         }
 
         function addChatMessage(message, sender) {
-            const chatDiv = document.getElementById('doctorChat');
+            const messagesContainer = document.getElementById('chatMessages');
             const messageDiv = document.createElement('div');
-            messageDiv.className = `chat-message ${sender}-message`;
+            messageDiv.className = `message ${sender}`;
             
             if (sender === 'bot') {
-                messageDiv.innerHTML = `<strong>Dr. Sharma:</strong> ${message}`;
+                messageDiv.innerHTML = `${message} <button class="voice-btn" onclick="speakText('${message.replace(/'/g, "\\'")}')"><i class="fas fa-volume-up"></i></button>`;
             } else {
                 messageDiv.textContent = message;
             }
             
-            chatDiv.appendChild(messageDiv);
-            chatDiv.scrollTop = chatDiv.scrollHeight;
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
 
-        function handleDoctorResponse(message) {
-            const lowerMessage = message.toLowerCase();
-            
-            setTimeout(() => {
-                let response = "";
-                let showPharmacies = false;
+        function generateAIResponse(userMessage) {
+            const responses = {
+                en: {
+                    fever: "For fever, rest and stay hydrated. If temperature exceeds 102°F or persists for more than 3 days, consult a doctor. Consider paracetamol for comfort.",
+                    headache: "For headaches, try resting in a dark room, staying hydrated, and gentle neck stretches. If severe or persistent, please consult a healthcare provider.",
+                    cough: "For cough, stay hydrated, use honey (for adults), and avoid irritants. If cough persists for more than 2 weeks or has blood, see a doctor immediately.",
+                    cold: "For cold symptoms, rest, drink warm fluids, and use steam inhalation. Most colds resolve in 7-10 days. See a doctor if symptoms worsen.",
+                    stomach: "For stomach pain, try eating bland foods, stay hydrated, and avoid spicy foods. If pain is severe or persistent, consult a doctor.",
+                    default: "I understand your concern. For proper diagnosis and treatment, I recommend consulting with a healthcare professional. In the meantime, ensure adequate rest and hydration."
+                },
+                hi: {
+                    fever: "बुखार के लिए, आराम करें और हाइड्रेटेड रहें। यदि तापमान 102°F से अधिक है या 3 दिनों से अधिक बना रहता है, तो डॉक्टर से सलाह लें।",
+                    headache: "सिरदर्द के लिए, अंधेरे कमरे में आराम करें, हाइड्रेटेड रहें, और गर्दन की हल्की स्ट्रेचिंग करें।",
+                    cough: "खांसी के लिए, हाइड्रेटेड रहें, शहद का उपयोग करें, और परेशान करने वाली चीजों से बचें।",
+                    cold: "सर्दी के लक्षणों के लिए, आराम करें, गर्म तरल पदार्थ पिएं, और भाप लें।",
+                    stomach: "पेट दर्द के लिए, सादा भोजन खाएं, हाइड्रेटेड रहें, और मसालेदार भोजन से बचें।",
+                    default: "मैं आपकी चिंता समझता हूं। उचित निदान और उपचार के लिए, मैं स्वास्थ्य पेशेवर से सलाह लेने की सलाह देता हूं।"
+                },
+                pa: {
+                    fever: "ਬੁਖਾਰ ਲਈ, ਆਰਾਮ ਕਰੋ ਅਤੇ ਪਾਣੀ ਪੀਂਦੇ ਰਹੋ। ਜੇ ਤਾਪਮਾਨ 102°F ਤੋਂ ਜ਼ਿਆਦਾ ਹੈ, ਡਾਕਟਰ ਨਾਲ ਸਲਾਹ ਕਰੋ।",
+                    headache: "ਸਿਰ ਦਰਦ ਲਈ, ਹਨੇਰੇ ਕਮਰੇ ਵਿਚ ਆਰਾਮ ਕਰੋ, ਪਾਣੀ ਪੀਂਦੇ ਰਹੋ।",
+                    cough: "ਖੰਘ ਲਈ, ਪਾਣੀ ਪੀਂਦੇ ਰਹੋ, ਸ਼ਹਿਦ ਦੀ ਵਰਤੋਂ ਕਰੋ।",
+                    cold: "ਜ਼ੁਕਾਮ ਦੇ ਲੱਛਣਾਂ ਲਈ, ਆਰਾਮ ਕਰੋ, ਗਰਮ ਤਰਲ ਪਦਾਰਥ ਪੀਓ।",
+                    stomach: "ਪੇਟ ਦੇ ਦਰਦ ਲਈ, ਸਾਦਾ ਭੋਜਨ ਖਾਓ, ਪਾਣੀ ਪੀਂਦੇ ਰਹੋ।",
+                    default: "ਮੈਂ ਤੁਹਾਡੀ ਚਿੰਤਾ ਸਮਝਦਾ ਹਾਂ। ਸਹੀ ਨਿਦਾਨ ਅਤੇ ਇਲਾਜ ਲਈ, ਸਿਹਤ ਪੇਸ਼ੇਵਰ ਨਾਲ ਸਲਾਹ ਕਰੋ।"
+                }
+            };
+
+            const langResponses = responses[currentLang] || responses.en;
+            const lowerMessage = userMessage.toLowerCase();
+
+            if (lowerMessage.includes('fever') || lowerMessage.includes('बुखार') || lowerMessage.includes('ਬੁਖਾਰ')) {
+                return langResponses.fever;
+            } else if (lowerMessage.includes('headache') || lowerMessage.includes('सिरदर्द') || lowerMessage.includes('ਸਿਰ ਦਰਦ')) {
+                return langResponses.headache;
+            } else if (lowerMessage.includes('cough') || lowerMessage.includes('खांसी') || lowerMessage.includes('ਖੰਘ')) {
+                return langResponses.cough;
+            } else if (lowerMessage.includes('cold') || lowerMessage.includes('सर्दी') || lowerMessage.includes('ਜ਼ੁਕਾਮ')) {
+                return langResponses.cold;
+            } else if (lowerMessage.includes('stomach') || lowerMessage.includes('पेट') || lowerMessage.includes('ਪੇਟ')) {
+                return langResponses.stomach;
+            } else {
+                return langResponses.default;
+            }
+        }
+
+        // Speech synthesis function
+        function speakText(text) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
                 
-                if (lowerMessage.includes('fever') || lowerMessage.includes('बुखार') || lowerMessage.includes('ਬੁਖਾਰ')) {
-                    response = "I understand you have fever. How many days have you had it? Any other symptoms like headache or body pain?";
-                    showPharmacies = true;
-                } else if (lowerMessage.includes('diabetes') || lowerMessage.includes('sugar') || lowerMessage.includes('मधुमेह') || lowerMessage.includes('ਸ਼ੂਗਰ')) {
-                    response = "For diabetes management, I recommend checking your blood sugar levels. Have you been taking your medication regularly?";
-                    showPharmacies = true;
-                } else if (lowerMessage.includes('headache') || lowerMessage.includes('सिरदर्द') || lowerMessage.includes('ਸਿਰਦਰਦ')) {
-                    response = "For headache relief, ensure you're hydrated and get adequate rest. If severe or persistent, we may need stronger medication.";
-                    showPharmacies = true;
-                } else if (lowerMessage.includes('3 days') || lowerMessage.includes('3 दिन') || lowerMessage.includes('3 ਦਿਨ')) {
-                    response = "A fever lasting 3 days needs attention. I'm prescribing Paracetamol 500mg twice daily and recommending a blood test. Please take rest and increase fluid intake.";
-                    showPharmacies = true;
-                } else {
-                    response = "Thank you for sharing your symptoms. Based on what you've described, I'll provide appropriate recommendations. Can you tell me more about when these symptoms started?";
+                // Set language based on current language
+                switch(currentLang) {
+                    case 'hi':
+                        utterance.lang = 'hi-IN';
+                        break;
+                    case 'pa':
+                        utterance.lang = 'pa-IN';
+                        break;
+                    default:
+                        utterance.lang = 'en-US';
                 }
                 
-                addChatMessage(response, 'bot');
-                
-                if (showPharmacies) {
-                    setTimeout(() => {
-                        addChatMessage("I'm checking nearby pharmacies for your prescribed medicines...", 'bot');
-                        showNearbyPharmacies();
-                    }, 1500);
-                }
-            }, 1000);
-        }
-
-        function showNearbyPharmacies() {
-            const pharmacyResults = document.getElementById('pharmacyResults');
-            const pharmacyList = document.getElementById('pharmacyList');
-            
-            pharmacyResults.classList.remove('hidden');
-            pharmacyList.innerHTML = '';
-            
-            pharmacies.forEach(pharmacy => {
-                const card = document.createElement('div');
-                card.className = 'pharmacy-card';
-                
-                const medicineStatuses = Object.entries(pharmacy.medicines).map(([med, status]) => {
-                    const statusClass = status === 'available' ? 'available' : status === 'limited' ? 'limited' : 'out-of-stock';
-                    return `<span class="status ${statusClass}">${med}: ${status}</span>`;
-                }).join(' ');
-                
-                card.innerHTML = `
-                    <h4>${pharmacy.name}</h4>
-                    <p>📍 ${pharmacy.address} (${pharmacy.distance})</p>
-                    <p>📞 ${pharmacy.phone}</p>
-                    <div style="margin: 10px 0;">${medicineStatuses}</div>
-                    <button class="btn btn-primary" onclick="orderFromPharmacy('${pharmacy.name}')">
-                        <span data-en="🛒 Order & Home Delivery" data-hi="🛒 ऑर्डर और होम डिलीवरी" data-pa="🛒 ਆਰਡਰ ਅਤੇ ਘਰ ਡਿਲੀਵਰੀ">🛒 Order & Home Delivery</span>
-                    </button>
-                `;
-                
-                pharmacyList.appendChild(card);
-            });
-        }
-
-        function orderFromPharmacy(pharmacyName) {
-            addChatMessage(`Order placed with ${pharmacyName}! Your medicines will be delivered within 2 hours. Delivery fee: ₹20. Total: ₹85`, 'bot');
-            addChatMessage("📱 You'll receive SMS updates about your delivery status.", 'bot');
-        }
-
-        function submitAppointment(event) {
-            event.preventDefault();
-            
-            const name = document.getElementById('patientName').value;
-            const phone = document.getElementById('patientPhone').value;
-            const area = document.getElementById('patientArea').value;
-            const department = document.getElementById('department').value;
-            const symptoms = document.getElementById('symptoms').value;
-            const date = document.getElementById('appointmentDate').value;
-            const time = document.getElementById('appointmentTime').value;
-            
-            // Hide form and show confirmation
-            document.getElementById('appointmentForm').classList.add('hidden');
-            document.getElementById('appointmentConfirmation').classList.remove('hidden');
-            
-            // Simulate appointment booking process
-            setTimeout(() => {
-                const confirmationDiv = document.getElementById('appointmentConfirmation');
-                const additionalInfo = document.createElement('div');
-                additionalInfo.innerHTML = `
-                    <div style="margin-top: 20px; padding: 15px; background: #e3f2fd; border-radius: 10px;">
-                        <h4 data-en="Next Steps:" data-hi="अगले कदम:" data-pa="ਅਗਲੇ ਕਦਮ:">Next Steps:</h4>
-                        <p data-en="1. You'll receive a video call on ${date} during ${time}" data-hi="1. आपको ${date} को ${time} के दौरान वीडियो कॉल आएगी" data-pa="1. ਤੁਹਾਨੂੰ ${date} ਨੂੰ ${time} ਦੌਰਾਨ ਵੀਡੀਓ ਕਾਲ ਆਵੇਗੀ">1. You'll receive a video call on ${date} during ${time}</p>
-                        <p data-en="2. If tests are needed, our team will visit your home in ${area}" data-hi="2. यदि टेस्ट की आवश्यकता है, तो हमारी टीम ${area} में आपके घर आएगी" data-pa="2. ਜੇ ਟੈਸਟ ਦੀ ਲੋੜ ਹੈ, ਤਾਂ ਸਾਡੀ ਟੀਮ ${area} ਵਿੱਚ ਤੁਹਾਡੇ ਘਰ ਆਵੇਗੀ">2. If tests are needed, our team will visit your home in ${area}</p>
-                        <p data-en="3. Hospital visit scheduled only if necessary" data-hi="3. अस्पताल की यात्रा केवल आवश्यक होने पर निर्धारित" data-pa="3. ਹਸਪਤਾਲ ਦੀ ਮੁਲਾਕਾਤ ਕੇਵਲ ਲੋੜ ਪੈਣ 'ਤੇ ਨਿਯਤ">3. Hospital visit scheduled only if necessary</p>
-                    </div>
-                `;
-                confirmationDiv.appendChild(additionalInfo);
-            }, 1000);
-        }
-
-        // Add event listeners
-        document.getElementById('appointmentForm').addEventListener('submit', submitAppointment);
-        
-        document.getElementById('emergencyInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                sendEmergencyMessage();
+                utterance.rate = 0.8;
+                utterance.pitch = 1;
+                speechSynthesis.speak(utterance);
+            } else {
+                alert(getTranslation('speech_not_supported') || 'Speech synthesis not supported in this browser');
             }
-        });
-        
-        document.getElementById('chatInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                sendChatMessage();
-            }
-        });
+        }
+
+        // Modal functions
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+        }
+
+        function confirmAppointment() {
+            alert(getTranslation('appointment_confirmed') || 'Appointment confirmed! You will receive a confirmation SMS shortly.');
+            closeModal('appointmentModal');
+        }
+
+        // Utility function to get translation
+        function getTranslation(key) {
+            return translations[currentLang] && translations[currentLang][key] ? translations[currentLang][key] : key;
+        }
 
         // Close modals when clicking outside
-        window.addEventListener('click', function(e) {
-            if (e.target.classList.contains('modal')) {
-                e.target.style.display = 'none';
-            }
+        window.addEventListener('click', function(event) {
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                if (event.target === modal) {
+                    modal.classList.add('hidden');
+                }
+            });
         });
 
-        // Initialize default language content
-        updatePlaceholders('en');
+        // Add some animation effects
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
 
-        // Simulate real-time updates
-        setInterval(() => {
-            const stats = document.querySelectorAll('.stat-number');
-            if (stats.length > 0) {
-                // Randomly update a stat to show live data
-                const randomStat = stats[Math.floor(Math.random() * stats.length)];
-                if (randomStat.textContent === '11') {
-                    // Sometimes show doctor availability changes
-                    if (Math.random() > 0.8) {
-                        randomStat.textContent = Math.random() > 0.5 ? '12' : '10';
-                        setTimeout(() => {
-                            randomStat.textContent = '11';
-                        }, 3000);
-                    }
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
                 }
-            }
-        }, 10000);
+            });
+        }, observerOptions);
 
-        // Simulate network optimization for rural areas
-        function optimizeForLowBandwidth() {
-            // Compress images and reduce animation complexity for slow connections
-            if (navigator.connection && navigator.connection.effectiveType === 'slow-2g') {
-                document.querySelectorAll('.service-card').forEach(card => {
-                    card.style.animation = 'none';
-                });
-            }
-        }
-
-        // Check for low bandwidth and optimize
-        if (navigator.connection) {
-            optimizeForLowBandwidth();
-            navigator.connection.addEventListener('change', optimizeForLowBandwidth);
-        }
-
-        // Service Worker for offline functionality (basic implementation)
-        if ('serviceWorker' in navigator) {
-            const swCode = `
-                self.addEventListener('fetch', event => {
-                    if (event.request.url.includes('/api/')) {
-                        event.respondWith(
-                            caches.match(event.request).then(response => {
-                                return response || new Response('{"offline": true, "message": "Offline mode - limited functionality"}', {
-                                    headers: { 'Content-Type': 'application/json' }
-                                });
-                            })
-                        );
-                    }
-                });
-            `;
-            
-            const blob = new Blob([swCode], { type: 'application/javascript' });
-            const swUrl = URL.createObjectURL(blob);
-            
-            navigator.serviceWorker.register(swUrl)
-                .then(() => console.log('Service Worker registered for offline support'))
-                .catch(() => console.log('Service Worker registration failed'));
-        }
-
-        // Add notification permission request for emergency alerts
-        function requestNotificationPermission() {
-            if ('Notification' in window && Notification.permission === 'default') {
-                Notification.requestPermission();
-            }
-        }
-
-        // Initialize on page load
-        document.addEventListener('DOMContentLoaded', () => {
-            // Load saved theme
-            loadTheme();
-            
-            requestNotificationPermission();
-            
-            // Add some sample chat for demonstration
-            setTimeout(() => {
-                if (Math.random() > 0.7) {
-                    const notifications = [
-                        "💊 Medicine stock updated at Nabha Medical Store",
-                        "👨‍⚕️ Dr. Kumar is now available for consultations",
-                        "🚑 Ambulance response time improved to 12 minutes"
-                    ];
-                    
-                    const notification = notifications[Math.floor(Math.random() * notifications.length)];
-                    if ('Notification' in window && Notification.permission === 'granted') {
-                        new Notification('Nabha Healthcare Update', {
-                            body: notification,
-                            icon: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="%234CAF50"/><text x="50" y="60" text-anchor="middle" fill="white" font-size="30" font-weight="bold">N+</text></svg>'
-                        });
-                    }
-                }
-            }, 5000);
+        // Observe all feature cards and sections
+        document.addEventListener('DOMContentLoaded', function() {
+            const elementsToObserve = document.querySelectorAll('.feature-card, .section');
+            elementsToObserve.forEach(el => observer.observe(el));
         });
-
-        // Voice recognition simulation for better UX
-        function simulateVoiceRecognition() {
-            const phrases = [
-                { en: "I have chest pain", hi: "मुझे छाती में दर्द है", pa: "ਮੈਨੂੰ ਛਾਤੀ ਵਿੱਚ ਦਰਦ ਹੈ" },
-                { en: "I can't breathe properly", hi: "मैं ठीक से सांस नहीं ले सकता", pa: "ਮੈਂ ਠੀਕ ਨਾਲ ਸਾਹ ਨਹੀਂ ਲੈ ਸਕਦਾ" },
-                { en: "I have been bleeding", hi: "मुझसे खून बह रहा है", pa: "ਮੇਰੇ ਤੋਂ ਖੂਨ ਨਿਕਲ ਰਿਹਾ ਹੈ" }
-            ];
-            
-            return phrases[Math.floor(Math.random() * phrases.length)][currentLanguage];
-        }
-
-        // Advanced GPS tracking simulation
-        function trackAmbulance() {
-            let eta = 15;
-            const trackingInterval = setInterval(() => {
-                eta--;
-                if (eta > 0) {
-                    addEmergencyMessage(`🚑 Ambulance update: ETA ${eta} minutes. Current location: 2.${eta}km away`, 'bot');
-                } else {
-                    addEmergencyMessage(`🏥 Ambulance has arrived at your location!`, 'bot');
-                    clearInterval(trackingInterval);
-                }
-            }, 60000); // Update every minute
-        }
-
-        // Prescription management
-        function generatePrescription(medicines) {
-            const prescriptionDiv = document.createElement('div');
-            prescriptionDiv.style.cssText = 'margin: 15px 0; padding: 15px; background: #e8f5e8; border-radius: 10px; border-left: 4px solid #4CAF50;';
-            
-            prescriptionDiv.innerHTML = `
-                <h4>📋 Digital Prescription</h4>
-                <p><strong>Date:</strong> ${new Date().toLocaleDateString()}</p>
-                <p><strong>Doctor:</strong> Dr. Sharma, MBBS, MD</p>
-                <p><strong>Medicines:</strong></p>
-                <ul style="margin-left: 20px;">
-                    ${medicines.map(med => `<li>${med}</li>`).join('')}
-                </ul>
-                <p><em>Valid for 30 days. Show this to any registered pharmacy.</em></p>
-            `;
-            
-            document.getElementById('doctorChat').appendChild(prescriptionDiv);
-        }
-
-        // Sample prescription generation for demo
-        function demonstratePrescription() {
-            setTimeout(() => {
-                generatePrescription([
-                    "Paracetamol 500mg - Twice daily after meals",
-                    "Vitamin D3 60000 IU - Once weekly",
-                    "ORS packets - As needed for hydration"
-                ]);
-            }, 3000);
-        }
     </script>
-
-    <script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
-
-  // Your web app's Firebase configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyDvf-LpfuX5Fz1Ay5Vt8UAzEiQCJCNZhVg",
-    authDomain: "sih2025-ad4b6.firebaseapp.com",
-    projectId: "sih2025-ad4b6",
-    storageBucket: "sih2025-ad4b6.firebasestorage.app",
-    messagingSenderId: "851137836698",
-    appId: "1:851137836698:web:10ccff90b83ceea6591123"
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-</script>
 </body>
 </html>
-                    
